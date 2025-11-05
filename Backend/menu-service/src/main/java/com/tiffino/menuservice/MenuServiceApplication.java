@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:453c9d563741c78e134d3c15e2b37ecd3f9fdce87db887b924e976a29f8ee472
-size 517
+package com.tiffino.menuservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableDiscoveryClient
+@EnableFeignClients
+public class MenuServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(MenuServiceApplication.class, args);
+    }
+
+}
