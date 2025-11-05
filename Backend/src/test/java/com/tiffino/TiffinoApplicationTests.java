@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b3eece3199ef9daab8bbb9270784c783a1bcd6ff75b55a33acc6300e4eebf87a
-size 213
+package com.tiffino;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class TiffinoApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TiffinoApplication.class, args);
+    }
+
+}
