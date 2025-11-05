@@ -1,0 +1,183 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
+
+  eureka-server:
+    build:
+      context: ./Backend/eureka-server
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8990:8990"
+    networks:
+      - app-network
+
+  api-gateway:
+    build:
+      context: ./Backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    ports:
+      - "8800:8800"
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - app-network
+
+  userservice:
+    build:
+      context: ./Backend/userservice
+      dockerfile: Dockerfile
+    container_name: userservice
+    ports:
+      - "8890:8890"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/userdbfinal?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  delivery-service:
+    build:
+      context: ./Backend/delivery-service
+      dockerfile: Dockerfile
+    container_name: deliveryservice
+    ports:
+      - "8970:8970"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/deliverydb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  review-service:
+    build:
+      context: ./Backend/review-service
+      dockerfile: Dockerfile
+    container_name: reviewservice
+    ports:
+      - "8950:8950"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/reviewdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  loyalty-service:
+    build:
+      context: ./Backend/loyalty-service
+      dockerfile: Dockerfile
+    container_name: loyaltyservice
+    ports:
+      - "8940:8940"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/loyaltydb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  payment-service:
+    build:
+      context: ./Backend/payment-service
+      dockerfile: Dockerfile
+    container_name: paymentservice
+    ports:
+      - "8930:8930"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/paymentdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  menu-service:
+    build:
+      context: ./backend/menu-service
+      dockerfile: Dockerfile
+    container_name: menuservice
+    ports:
+      - "8920:8920"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/menudb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  order-service:
+    build:
+      context: ./Backend/order-service
+      dockerfile: Dockerfile
+    container_name: orderservice
+    ports:
+      - "8910:8910"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/orderdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8990/eureka
+    depends_on:
+      - mysql-db
+      - eureka-server
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./Frontend/tiffino-main
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "8085:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - app-network
+
+volumes:
+  mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
