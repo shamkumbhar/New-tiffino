@@ -1,0 +1,66 @@
+<h2 class="section-title text-center">Food Cart</h2>
+<div class="search-bar">
+  <div class="search-input-wrapper">
+    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#888" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+    </svg>
+    <input
+      type="text"
+      [(ngModel)]="searchText"
+      (input)="onSearchChange(searchText)"
+      placeholder="Search by name, meal type, or price..."
+    />
+  </div>
+</div>
+<div class="popup" *ngIf="showPopup">
+  <span>Item added to cart!</span>
+  <a routerLink="/addtocart" class="viewcart"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+</svg>View Cart</a>
+  <span class="close-icon" (click)="showPopup = false">&times;</span>
+</div>
+
+<div *ngIf="filteredCuisines.length === 0" class="no-results">
+  <p>No cuisines match your search.</p>
+</div>
+
+<div class="meal_type">
+  <div class="meal-card" *ngFor="let item of filteredCuisines">
+    <img [src]="item.imageUrl" alt="{{ item.name }}" />
+    <h3>{{ item.name }}</h3>
+  <p><i class="bi bi-list-ul"></i> <strong>Meal Type:</strong> {{ item.meal_type || 'N/A' }}</p>
+    <p><i class="bi bi-fire"></i> <strong>Calories:</strong> {{ item.calories || 'N/A' }}</p>
+    <p><i class="bi bi-battery-half"></i> <strong>Carbs:</strong> {{item.carbs || 'N/A' }}</p>
+    <p><i class="bi bi-droplet"></i> <strong>Fats:</strong> {{item.fats || 'N/A' }}</p>
+    <p><i class="bi bi-thermometer"></i> <strong>Spice Level:</strong> {{item.spice_level || 'N/A' }}</p>
+    <p><i class="bi bi-flask me-3 text-secondary"></i> <strong>Protein:</strong> {{item.protein || 'N/A' }}</p>
+    <p> <i class="bi bi-flask me-3 text-secondary"></i><strong>Price Per Meal:</strong> ₹{{item.price_per_meal }}</p>
+    <!-- add any other fields you want here -->
+    <button (click)="addToCart(item)" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="23" fill="black" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+</svg>Add to Cart</button>
+<button (click)="navigate(item.id)" class="viewcart fs-6">View Product</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

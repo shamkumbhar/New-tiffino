@@ -1,0 +1,403 @@
+
+
+
+
+
+.navbar {
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; 
+
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: fit-content;
+}
+ 
+/* Left section: logo + search */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+ 
+}
+ 
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fc8019; /* Orange like Swiggy */
+  text-decoration: none;
+}
+ 
+.logos {
+  width: 300px;
+  max-width: 100%;
+}
+
+.logos svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.search-box {
+  position: relative;
+}
+ 
+.search-box input {
+  padding: 8px 12px 8px 35px;
+  border: 1px solid #202020;
+  border-radius: 20px;
+  outline: none;
+  color:#000000;
+  
+}
+ 
+.search-box .search-icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #000000;
+  font-size: 14px;
+  
+}
+ 
+/* Center links */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.nav-link {
+  color: #000000;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 16px;
+  transition: background 0.2s ease;
+  font-size: 16px;
+}
+ 
+.nav-link:hover,
+.nav-link.active {
+  background: #d0d0d0;
+  color: #fc8019;
+}
+ 
+/* Right icons + login */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #fd8300;
+}
+ 
+.icon {
+  font-size: 18px;
+  color: #555;
+  text-decoration: none;
+}
+ 
+.icon:hover {
+  color: #fc8019;
+}
+ 
+.login-btn {
+  background: #000000;
+  color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+ 
+.login-btn:hover {
+  background: #51504e;
+}
+
+
+
+/*.menu-icon {
+  font-size: 26px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background-color:#ffffff;
+  color: #000000;
+  /* Only show on small screens 
+}*/
+
+/* Sidebar base styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -260px; 
+  width: 260px;
+  height: 100%;
+
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,       
+    #ffffff 40%,      
+    #fdae61 75%,    
+    #fd6e00 100%     
+  );
+
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.15);
+  transition: right 0.3s ease-in-out; 
+  z-index: 999;
+  overflow-y: auto;
+  border-radius: 50px;
+}
+/* Open state — bring sidebar into view from the left */
+.sidebar.open {
+  right: 0; /* 👈 move to visible */
+}
+
+/* Close button */
+.sidebar .close-btn {
+  font-size: 32px;
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+/* Sidebar menu items */
+.sidebar ul {
+  margin-top: 60px;
+  list-style: none;
+  padding: 0 20px;
+}
+
+.sidebar li {
+  margin: 18px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar .nav-link {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #000000;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+/* background: rgb(255, 255, 255); */
+  color: #ff7402;
+background: linear-gradient(
+    to right,
+    #ffffff 0%,       
+    #ffffff 40%,      
+    #fdae61 75%,    
+    #fd6e00 100%     
+  );
+
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .navbar-left,
+  .nav-links {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar .nav-link {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+@media (max-width: 400px) {
+  .menu-icon {
+    display: block;
+  }
+
+  .navbar-left,
+  .nav-links {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    left: -100%;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar .nav-link {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.95) 40%,
+    rgba(253, 110, 0, 0.2) 75%,
+    #fd6e00 100%
+  );
+  padding: 10px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  flex-wrap: wrap;
+  border-radius: 20px;
+
+}
+.nav-link[data-tooltip],
+.icon[data-tooltip],
+.login-btn[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Tooltip box */
+.nav-link[data-tooltip]::after,
+.icon[data-tooltip]::after,
+.login-btn[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 125%; /* Position above the element */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #0f0f0e;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 999;
+}
+
+/* Tooltip arrow */
+.nav-link[data-tooltip]::before,
+.icon[data-tooltip]::before,
+.login-btn[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  top: 115%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+/* Show tooltip on hover */
+.nav-link[data-tooltip]:hover::after,
+.icon[data-tooltip]:hover::after,
+.login-btn[data-tooltip]:hover::after,
+.nav-link[data-tooltip]:hover::before,
+.icon[data-tooltip]:hover::before,
+.login-btn[data-tooltip]:hover::before {
+  opacity: 1;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+ 
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+  z-index: 10;
+}
+ 
+/* Common icon styling for all types */
+.icons {
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.2s ease, filter 0.3s ease;
+  margin: 0 6px;
+ 
+ 
+}
+ @media (max-width: 768px) {
+  .navbar-center {
+    gap: 8px;
+  }
+
+  .navbar-right {
+    gap: 8px;
+  }
+
+  .nav-link {
+    padding: 4px 6px;
+  }
+
+  .login-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+/* Hover effect: scale up and lighten */
+.icons:hover {
+  transform: scale(0.9);
+  filter: brightness(1.2);
+  
+}
+ 
+/* Click effect: scale down and darken */
+.icons:active {
+  transform: scale(0.9);
+  filter: brightness(0.8);
+  
+}
+ 
+/* For SVG icons */
+.svg-icon svg {
+  fill: black;
+  transition: transform 0.2s ease, fill 0.3s ease;
+}
+ 
+/* For image icons (like PNG) */
+.menu-icon img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: transform 0.2s ease, filter 0.3s ease;
+}
+ 
+.menu-svg {
+  color: #000000; /* Pure black */
+}

@@ -1,0 +1,106 @@
+<form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+  <label>Rating:</label>
+  <div class="star-rating">
+    <span
+      *ngFor="let star of stars; let i = index"
+      (click)="setRating(i + 1)"
+      (mouseover)="hoverRating(i + 1)"
+      (mouseleave)="hoverRating(0)"
+    >
+      <i
+        class="bi"
+        [ngClass]="{
+          'bi-star-fill': (i + 1) <= (hoveredRating() || reviewForm.get('rating')?.value),
+          'bi-star': (i + 1) > (hoveredRating() || reviewForm.get('rating')?.value)
+        }"
+        style="font-size: 1.5rem; color: #ffc107; cursor: pointer;"
+      ></i>
+    </span>
+  </div>
+ 
+  <label>Comment:</label>
+  <textarea formControlName="comment" required></textarea>
+  <br />
+ 
+  <label>Photo URLs:</label>
+  <input type="file" (change)="onFileChange($event)" class="mt-1 form-control" />
+ 
+  <div *ngIf="imageError()" class="text-danger">
+    Invalid file type. Please upload a JPG, JPEG, or PNG file.
+  </div>
+ 
+  <label>Reaction:</label>
+  <div class="reaction-icons">
+    <i
+      class="fa fa-thumbs-up"
+      [class.selected]="likeClicked()"
+      [ngClass]="{ 'animate-bounce': likeClicked() }"
+      (click)="onLikeClick()"
+      title="Like"
+    ></i>
+    <span>{{ reviewForm.get('likes')?.value }}</span>
+ 
+    <i
+      class="fa fa-thumbs-down"
+      [class.selected]="dislikeClicked()"
+      [ngClass]="{ 'animate-bounce': dislikeClicked() }"
+      (click)="onDislikeClick()"
+      title="Dislike"
+    ></i>
+    <span>{{ reviewForm.get('dislikes')?.value }}</span>
+  </div>
+ 
+  <button type="submit" [disabled]="isSubmitting()">Submit Review</button>
+</form>
+ 
+<hr />
+ 
+<div class="comments-container">
+  <div *ngIf="isLoadingComments(); else commentsList">
+    <!-- optional: a spinner or loading message -->
+    <p>Loading comments...</p>
+  </div>
+ 
+  <ng-template #commentsList>
+    <div *ngIf="comments().length > 0; else noComments">
+      <div *ngFor="let c of comments()">
+        <div class="comment-card">
+          <div class="comment-header">
+            <h4>User #{{ c.userId }}</h4>
+            <!-- <button (click)="deleteComment(c.id)" [disabled]="isLoadingComments()">🗑 Delete</button> -->
+          </div>
+          <p class="comment-text">{{ c.comment }}</p>
+          <p class="comment-rating">⭐ {{ c.rating }}/5</p>
+          <div class="comment-actions">
+            <span>👍 {{ c.likes }}</span> <span>👎 {{ c.dislikes }}</span>
+          </div>
+          <small>Review Date: {{ c.reviewDate | date:'short' }}</small><br/>
+          <small>Meal ID: {{ c.mealId }} | Order ID: {{ c.orderId }}</small>
+        </div>
+      </div>
+    </div>
+   
+    <ng-template #noComments>
+       <br>
+      <h1 class="text-center">No comments yet.</h1>
+    </ng-template>
+  </ng-template>
+</div>
+ 
+ 
+ 
+<div *ngIf="showSuccessPopup()" class="popup-backdrop">
+  <div class="popup-modal">
+    <h2> Review Submitted!</h2>
+    <p>Thank you for your feedback.</p>
+    <button (click)="showSuccessPopup.set(false)">Close</button>
+  </div>
+</div>
+ 
+ <div *ngIf="showDeletePopup()" class="popup-backdrop">
+  <div class="popup-modal">
+    <h2> Review Submitted!</h2>
+    <p>Thank you for your feedback.</p>
+    <button (click)="showDeletePopup.set(false)">Close</button>
+  </div>
+</div>

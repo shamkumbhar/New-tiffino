@@ -1,0 +1,57 @@
+<div class="full-profile-page" *ngIf="partnerData"> 
+  <div class="profile-content-wrapper">
+    
+    <!-- Delivery Partner Profile -->
+    <div class="profile-card-expanded">
+      <div class="profile-header">
+        <h1 class="profile-name">{{ partnerData.name }}</h1>
+        <p class="profile-role">Delivery Partner</p>
+      </div>
+
+      <div class="profile-details-grid">
+        <div class="profile-detail">
+          <strong>📞 Phone:</strong>
+          <span>{{ partnerData.phoneNumber }}</span>
+        </div>
+        <div class="profile-detail">
+          <strong>📍 Location:</strong>
+          <span>{{ partnerData.location }}</span>
+        </div>
+        <div class="profile-detail">
+          <strong>Vehicle Number:</strong>
+          <span>{{ partnerData.vehicleDetails }}</span>
+        </div>
+        <div class="profile-detail">
+          <strong>Status:</strong>
+          <span>{{ partnerData.status }}</span>
+        </div>
+        <div class="profile-detail">
+          <strong>🌐 Latitude:</strong>
+          <span>{{ partnerData.currentLatitude }}</span>
+        </div>
+        <div class="profile-detail">
+          <strong>🌐 Longitude:</strong>
+          <span>{{ partnerData.currentLongitude }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Item Info -->
+    <div *ngIf="orderData && orderData.orderItems && cuisines.length" class="product-info"> 
+      <h1 class="fw-bold fs-3 text-center">Order Items</h1>
+      <div *ngFor="let cus of cuisines; let i = index" class="cuisine-item">
+        <h3 class="fw-bold">{{ i + 1 }}: {{ cus.name }}</h3>
+        <p class="ms-3"><strong>Price:</strong> ₹{{ cus.price_per_meal }}</p>
+        <p class="ms-3"><strong>Diet Preferences:</strong> {{ cus.dietary_preferences }}</p>
+        <p class="ms-3"><strong>Spice Level:</strong> {{ cus.spice_level }}</p>
+      </div>
+        
+        <h4 class="mt-2 fs-5">Delivery Date: ₹{{ orderData.deliveryDate }}</h4>
+        <h4 class="mt-2 fs-5">Order Type: {{ orderData. orderType }}</h4>
+      <h3 class="mt-4">Total: ₹{{ orderData.totalAmount }}</h3>
+
+      <p>Status: <strong>{{ orderData.status || 'PENDING' }}</strong></p>
+    </div>
+
+  </div>
+</div>

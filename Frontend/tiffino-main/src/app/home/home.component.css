@@ -1,0 +1,518 @@
+
+.better-food-section {
+  position: relative;
+  background-color: #ffffff;
+  background-clip: border-box;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+ 
+}
+
+.center-text {
+  z-index: 2;
+}
+
+.headline {
+  font-size: 3.5rem;
+  color: #f0434a;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.headline span {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.subtext {
+  color: #050505;
+  font-size: 1.5rem;
+  margin-top: 15px;
+  font-style: normal;
+  font-weight:400px;
+}
+
+.food-img,
+.decoration {
+  position: absolute;
+  z-index: 1;
+  max-width: 180px;
+}
+
+.meals {
+  bottom: 1%;
+  left: 10%;
+  width: 160px;
+  border-radius: 150px;
+}
+
+.poha {
+  top: 5%;
+  right: 10%;
+  height:150px;
+  width: 160px;
+  border-radius: 500px;
+  transform: translateX(100px); /* Right side */
+  animation: slideInRight 0.7s ease-out forwards;
+
+}
+.dosa{
+  top:5%;
+  left: 10%;
+  height:150px;
+  width:160px;
+  border-radius:100px;
+
+}
+
+
+.vadapav {
+  right: 10%;
+  bottom: 3%;
+  width: 140px;
+  height:150px;
+  border-radius: 70px;
+}
+
+
+.biryani{
+ bottom: 3%;
+  left: 45%;
+  width: 160px;
+  height:120px;
+  border-radius: 300px;
+}
+
+.food-img,
+.decoration {
+  opacity: 0;
+  transform: translateX(-100px);
+  animation:  slideInLeft 0.7s ease-out forwards;
+}
+
+/* Optional delay for staggered entry */
+.food-img:nth-child(1) { animation-delay: 0.1s; }
+.food-img:nth-child(2) { animation-delay: 0.2s; }
+.food-img:nth-child(3) { animation-delay: 0.3s; }
+.decoration:nth-child(4) { animation-delay: 0.4s; }
+.decoration:nth-child(5) { animation-delay: 0.5s; }
+.decoration:nth-child(6) { animation-delay: 0.6s; }
+
+/* Animation keyframes */
+@keyframes  slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/*style for card*/
+.food-card {
+  width: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  transition: transform 0.3s;
+  margin: 16px;
+}
+
+.food-card:hover {
+  transform: scale(1.02);
+}
+
+.food-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.food-details {
+  padding: 16px;
+}
+
+.food-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+.food-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0;
+}
+
+.food-meta {
+  font-size: 13px;
+  color: #888;
+}
+
+.food-offer {
+  color: #e53935;
+  font-weight: bold;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.quantity-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantity-controls button {
+  width: 28px;
+  height: 28px;
+  font-size: 18px;
+  border: none;
+ 
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.quantity-controls span {
+  font-size: 16px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+.carousel-control-prev {
+  margin-left: -30px;  /* Move the left button more to the left */
+}
+
+/* Carousel control buttons - Next button (right) */
+.carousel-control-next {
+  margin-right: -30px; /* Move the right button more to the right */
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns */
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  background-color: #78c5c0;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.title {
+  font-weight: bold;
+  margin: 10px 0;
+}
+img{
+    border-radius: 20px;
+}
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Popup card with increased height */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top-color: #dc3545;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Popup Overlay */
+.popup-overlay,
+.error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Success and Error Card */
+.popup-card,
+.error-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.popup-icon svg,
+.error-icon svg {
+  margin-bottom: 10px;
+}
+
+.popup-icon svg {
+  fill: green;
+}
+
+.error-icon svg {
+  fill: red;
+}
+
+.wide-select {
+  width: 100%;        /* Or use a fixed value like 400px */
+  max-width: 500px;   /* Optional: limit max width */
+}
+.meal_type {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* show 4 per row */
+  gap: 24px;
+  padding: 20px;
+}
+
+.meal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.meal-card:hover {
+  transform: translateY(-5px);
+}
+
+.meal-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.meal-card h3 {
+  margin: 12px 16px;
+  font-size: 20px;
+}
+
+.meal-card p {
+  margin: 4px 16px;
+  font-size: 14px;
+  color: #555;
+}
+
+ .meal-card .viewcart {
+  margin: 2px 16px 16px;
+  width: calc(100% - 32px);
+  background: #ff6f00;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-size: 10px;
+ }
+
+.meal-card button:hover {
+  background: #e05a00;
+
+}
+.btn{
+  margin: 2px 16px 16px;
+  width: calc(100% - 32px);
+  color: #fff;
+
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.popup {
+  width: 1200px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  position: fixed;
+  bottom: 100px;
+  right: 220px;
+
+  background: #28a745;
+  color: #000000;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.viewcart {
+  font-size: 25px;
+  font-weight:400;
+  color: #050505;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+ 
+  margin-left: 820px;
+}
+.video-container {
+  padding: 20px;              /* space from all sides */
+  background-color: #fff;     /* background around video */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.fit-video {
+  width: 90%;                /* fill container width */
+  height: 90%;               /* fill container height */
+  object-fit: cover;          /* removes black bars by cropping */
+  display: block;
+}
+ @media (max-width: 768px) {
+  .meal-card h3 {
+    font-size: 18px;
+    margin: 10px 12px 0;
+  }
+
+  .meal-card p {
+    font-size: 13px;
+    margin: 4px 12px;
+  }
+
+  .meal-card button {
+    font-size: 14px;
+    padding: 8px;
+    margin: 6px 12px 12px;
+    width: calc(100% - 24px);
+  }
+
+  .popup {
+    width: 95%;
+    height: auto;
+    padding: 10px;
+    flex-direction: column;
+    bottom: 20px;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .viewcart {
+    font-size: 18px;
+    margin: 10px 0 0;
+  }
+
+  .video-container {
+    padding: 10px;
+  }
+
+  .fit-video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+
+
+  .meal_type {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);  /* show 4 per row */
+  gap: 24px;
+  padding: 20px;
+}
+
+.meal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+  .meal-card h3 {
+    font-size: 16px;
+  }
+
+  .meal-card p {
+    font-size: 12px;
+  }
+
+  .meal-card button {
+    font-size: 13px;
+  }
+.popup {
+    width: 30%;
+    height: auto;
+    padding: 10px;
+    flex-direction: column;
+    bottom: 20px;
+    right: auto;
+    left: 20%;
+    transform: translateX(-50%);
+    text-align: left;
+    margin-right: 200px;
+  }
+
+  .viewcart {
+    font-size: 17px;
+    margin: 10px 0 0;
+  }
+}

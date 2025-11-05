@@ -1,0 +1,166 @@
+.payment-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #f9f9f9;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.payment-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.product-info {
+  background: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.product-info h3 {
+  margin-top: 0;
+  color: #444;
+}
+
+.payment-options label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Table container */
+.container-fluid {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(108, 117, 125, 0.1);
+}
+
+/* Card enhancements */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Chart container background */
+.chart-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+
+.feature-comparison {
+  width: 800px;
+  margin: 40px auto;
+  background: #f8f9fa;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+  overflow-x: auto;
+}
+
+.table-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  background-color: #ffffff;
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 14px 20px;
+  text-align: center;
+  border: 1px solid #dee2e6;
+}
+
+.comparison-table th {
+  background-color: #0d6efd;
+  color: #fff;
+  font-weight: 600;
+}
+
+.comparison-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.comparison-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .comparison-table th,
+  .comparison-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .table-title {
+    font-size: 22px;
+  }
+}
+
+
+
+.chart-container {
+  
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: lch(94.25% 0.71 18.57);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align:center;
+}
+canvas {
+  max-width: 100%;
+}
+
+.social{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 600px;
+}
+
+
+
+

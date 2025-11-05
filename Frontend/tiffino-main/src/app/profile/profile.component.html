@@ -1,0 +1,392 @@
+<div class="profile-container">
+  <div class="back">
+    <video autoplay muted loop playsinline>
+      <source src="assets/videos/profile.mp4" type="video/mp4" />
+    </video>
+</div>
+
+  <!-- Profile Content in One Card -->
+  <div class="profile-content container">
+    <div class="card">
+      <div class="card-body">
+         <div class="card-header-actions">
+        <button class="btn btn-danger" (click)="logout()">Log Out</button>
+        <button class="btn btn-primary" (click)="openEditPopup()">Edit Profile</button>
+      </div>
+        <h2 class="card-title text-center fw-bold">Profile Details</h2>
+        
+        <!-- Profile Information -->
+        <div class="list-group">
+          <!-- Full Name -->
+          <div class="list-group-item" *ngIf="userDetails?.fullName">
+            <i class="fas fa-user me-2"></i>
+            <strong class="ml-2">Full Name:</strong> 
+            <span>{{ userDetails?.fullName }}</span>
+          </div>
+
+          <!-- Email -->
+          <div class="list-group-item" *ngIf="userDetails?.email">
+            <i class="fas fa-envelope me-2"></i>
+            <strong>Email:</strong> 
+            <span>{{ userDetails?.email }}</span>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="list-group-item" *ngIf="userDetails?.phoneNumber">
+            <i class="fas fa-phone-alt me-2"></i>
+            <strong>Phone:</strong> 
+            <span>{{ userDetails?.phoneNumber }}</span>
+          </div>
+
+          <!-- Gender -->
+          <div class="list-group-item" *ngIf="userDetails?.gender">
+            <i class="fas fa-genderless me-2"></i>
+            <strong>Gender:</strong> 
+            <span>{{ userDetails?.gender }}</span>
+          </div>
+
+          <!-- Dietary Preferences -->
+          <div class="list-group-item" *ngIf="userDetails?.dietaryPreferences">
+            <i class="fas fa-utensils me-2"></i>
+            <strong>Dietary Preferences:</strong> 
+            <span>{{ userDetails?.dietaryPreferences }}</span>
+          </div>
+
+          <!-- Allergen Preferences -->
+          <div class="list-group-item" *ngIf="userDetails?.allergenPreferences">
+            <i class="fas fa-allergies me-2"></i>
+            <strong>Allergen Preferences:</strong> 
+            <span>{{ userDetails?.allergenPreferences }}</span>
+          </div>
+
+          <!-- Date Joined -->
+          <div class="list-group-item" *ngIf="userDetails?.dateJoined">
+            <i class="fas fa-calendar-alt me-2"></i>
+            <strong>Joined On:</strong> 
+            <span>{{ userDetails?.dateJoined | date:'dd/MMM/yyyy' }}</span>
+            
+          </div>
+
+          <!-- Address -->
+          <div class="list-group-item" *ngIf="userDetails?.addresses?.[0]?.addressLine1">
+            <i class="fas fa-home me-2"></i>
+            <strong>Address:</strong> 
+            <span>{{ userDetails?.addresses?.[0]?.addressLine1 }}</span>,
+            <span>{{ userDetails?.addresses?.[0]?.addressLine2 }}</span>,
+            <span>{{ userDetails?.addresses?.[0]?.city }}, {{ userDetails?.addresses?.[0]?.state }}</span>
+          </div>
+        </div>
+        <!-- <h1 class="mt-2 fw-bold text-center">Ordered details</h1>
+      <div class="orders-container" *ngIf="orders?.length; else noOrders">
+  <div
+    class="order-card"
+    *ngFor="let order of orders; let i = index"
+    [@fadeIn]="i"
+  >
+    <div class="order-header">
+      <h3 class="order-title">Order #{{ order.id }}</h3>
+      <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+        {{ order.status }}
+      </span>
+      <small class="order-date">{{ order.orderDate | date: 'medium' }}</small>
+    </div>
+
+    <div class="order-body">
+      <div><strong>Type:</strong> {{ order.orderType }}</div>
+      <div><strong>Subscription:</strong> {{ order.subscriptionType || 'N/A' }}</div>
+      <div><strong>Delivery:</strong> {{ order.deliveryDate | date }} ({{ order.deliveryTimeSlot }})</div>
+      <div><strong>Total:</strong> ₹{{ order.totalAmount }}</div>
+      <div><strong>Discount:</strong> ₹{{ order.appliedDiscount }}</div>
+      <div *ngIf="order.notes"><strong>Notes:</strong> {{ order.notes }}</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="getProgressPercent(order.status)"></div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noOrders>
+  <p class="no-orders text-center">No orders found</p>
+</ng-template>
+      </div> -->
+      
+<div class="payment-history-container" *ngIf="paymenthistory?.length; else noHistory">
+  <h2 class="section-title">
+    <i class="bi bi-clock-history me-2 fs-3"></i>Payment History
+  </h2>
+
+  <div *ngFor="let payment of paymenthistory; let i = index" class="payment-card">
+    <div class="payment-header">
+      <h5>
+        <i class="bi bi-receipt me-2 text-primary fs-3"></i>#{{ i + 1 }} • 
+        <span class="txn-id">Txn ID: {{ payment.transactionId }}</span>
+      </h5>
+      <span class="badge " [ngClass]="{
+        'success': payment.status === 'SUCCESS',
+        'cancelled': payment.status === 'CANCELLED',
+        'pending': payment.status === 'PENDING'
+      }">
+        <i class="bi " [ngClass]="{
+          'bi-check-circle-fill': payment.status === 'SUCCESS',
+          'bi-x-circle-fill': payment.status === 'CANCELLED',
+          'bi-exclamation-circle-fill': payment.status === 'PENDING'
+        }"></i> {{ payment.status }}
+      </span>
+    </div>
+
+    <div class="payment-body">
+      <p><i class="bi bi-bag-check me-2 fs-3"></i><strong>Order ID:</strong> {{ payment.orderId }}</p>
+      <p><i class="bi bi-currency-rupee me-2 fs-3"></i><strong>Amount:</strong> ₹{{ payment.amount }}</p>
+      <p><i class="bi bi-credit-card me-2 fs-3"></i><strong>Method:</strong> {{ payment.paymentMethod }}</p>
+      <p><i class="bi bi-calendar4 me-2 fs-3"></i><strong>Date:</strong> {{ payment.transactionDate | date: 'medium' }}</p>
+    </div>
+  </div>
+</div>
+
+<ng-template #noHistory>
+  <p class="no-history-msg"><i class="bi bi-info-circle me-2"></i>No payment history available.</p>
+</ng-template>
+</div>
+  </div>
+
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showEditPopup">
+  <div class="modal-container">
+    <form [formGroup]="editForm" (ngSubmit)="onUpdateUser()" enctype="multipart/form-data" novalidate>
+      <h3 class="fw-bold">Edit Profile</h3>
+
+      <!-- Step 1: Personal Information -->
+      <div *ngIf="step === 1">
+        <div class="row">
+          <!-- Full Name & Password -->
+          <div class="col-md-6 form-group">
+            <label>Full Name:</label>
+             <div class="error" *ngIf="f['fullName'].touched && f['fullName'].invalid">
+           
+             <p *ngIf="f['fullName'].hasError('pattern')">Full Name should not contain numbers special characters</p>
+          </div>
+            <input type="text" formControlName="fullName" placeholder="Full Name" class="form-control" />
+            <div *ngIf="f['fullName']?.invalid && (f['fullName']?.touched)" class="text-danger">
+              Full Name is required.
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>password:</label>
+            
+          <div class="errors" *ngIf="f['password'].touched && f['password'].invalid">
+         <p *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</p>
+          </div>
+            <input type="password" formControlName="password" placeholder="Password" autocomplete="new-password" class="form-control" />
+            <div *ngIf="f['password']?.invalid && (f['password']?.touched )" class="text-danger">
+              Password is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Email & Phone -->
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Email:</label>
+            <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+          
+            <p *ngIf="f['email'].errors?.['email']">Enter a valid email</p>
+          </div>
+            <input type="email" formControlName="email" placeholder="Email" class="form-control" />
+            <div *ngIf="f['email']?.invalid && (f['email']?.touched )" class="text-danger">
+              Please enter a valid email.
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Phone Number:</label>
+              <div class="error" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+         
+            <p *ngIf="f['phoneNumber'].errors?.['pattern']">Enter a valid 10-digit number</p>
+          </div>
+            <input type="text" formControlName="phoneNumber" placeholder="Mobile Number" class="form-control" />
+            <div *ngIf="f['phoneNumber']?.invalid && (f['phoneNumber']?.touched )" class="text-danger">
+              Phone number is required and must be a 10-digit number.
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Button -->
+        <div class="d-flex justify-content-between mt-3">
+          <button type="button" class="btn btn-primary" (click)="goToNextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Additional Information -->
+      <div *ngIf="step === 2">
+        <div class="row">
+          <!-- First & Last Name -->
+          <div class="col-md-6 form-group">
+            <label>First Name:</label>
+            <div class="error" *ngIf="f['firstName'].touched && f['firstName'].invalid">
+      
+            <p *ngIf="f['firstName'].errors?.['pattern']">First Name should have only alphabet charactors</p>
+            <p *ngIf="f['firstName'].errors?.['maxlength']">First Name should have maximum 20 characters</p>
+          </div>
+            <input type="text" formControlName="firstName" placeholder="First Name" class="form-control" />
+            <div *ngIf="f['firstName']?.invalid && (f['firstName']?.touched )" class="text-danger">
+              First Name is required.
+            </div>
+          </div>
+          <div class="col-md-6 form-group">
+            <label>Last Name:</label>
+            <!-- Last Name -->
+          <div class="error" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+         
+            <p *ngIf="f['lastName'].errors?.['pattern']">Last Name should have only alphabet charactors</p>
+            <p *ngIf="f['lastName'].errors?.['maxlength']">Last Name should have only characters</p>
+          </div>
+            <input type="text" formControlName="lastName" placeholder="Last Name" class="form-control" />
+          
+          </div>
+        </div>
+
+        <!-- Gender & Role -->
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Gender:</label>
+        
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="gender" value="male" />
+              <label class="form-check-label" for="male">Male</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="gender" value="female" />
+              <label class="form-check-label" for="female">Female</label>
+            </div>
+            <div *ngIf="f['gender']?.invalid && (f['gender']?.touched)" class="text-danger">
+              Gender is required.
+            </div>
+          </div>
+
+          <div class="col-md-6 form-group">
+            <label>Role:</label>
+            <select formControlName="role" class="form-select">
+              <option value="" disabled>Select Role</option>
+              <option value="CUSTOMER">CUSTOMER</option>
+              <option value="ADMIN">ADMIN</option>
+              <option value="DELIVERY_PARTNER">DELIVERY_PARTNER</option>
+              <option value="SUBADMIN">SUBADMIN</option>
+            </select>
+            <div *ngIf="f['role']?.invalid && (f['role']?.touched )" class="text-danger">
+              Role is required.
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Photo -->
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <input type="file" (change)="onFileChange($event)" class="form-control" />
+            <small *ngIf="imageError" class="text-danger">Only JPG or JPEG files are allowed.</small>
+          </div>
+        </div>
+
+        <!-- Active Status -->
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <label>Active Status:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="isActive" [value]="true" id="active" />
+              <label class="form-check-label" for="active">Active</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="isActive" [value]="false" id="inactive" />
+              <label class="form-check-label" for="inactive">Inactive</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next & Previous Buttons -->
+        <div class="d-flex justify-content-between mt-3">
+          <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()">Previous</button>
+          <button type="button" class="btn btn-primary" (click)="goToNextStep()">Next</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Address Information -->
+      <div *ngIf="step === 3">
+        <div formArrayName="addresses">
+          <div *ngFor="let addr of addresses.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" formControlName="addressLine1" placeholder="Address Line 1" class="form-control" />
+                <div *ngIf="addr.get('addressLine1')?.invalid && (addr.get('addressLine1')?.touched )" class="text-danger">
+                  Address Line 1 is required.
+                </div>
+                <input type="text" formControlName="addressLine2" placeholder="Address Line 2 (optional)" class="form-control mt-2" />
+                <input type="text" formControlName="city" placeholder="City" class="form-control mt-2" />
+                <div *ngIf="addr.get('city')?.invalid && (addr.get('city')?.touched )" class="text-danger">
+                  City is required.
+                </div>
+              </div>
+
+              <div class="col-md-6 form-group">
+                <input type="text" formControlName="state" placeholder="State" class="form-control" />
+                <div *ngIf="addr.get('state')?.invalid && (addr.get('state')?.touched )" class="text-danger">
+                  State is required.
+                </div>
+                <input type="text" formControlName="pinCode" placeholder="Pin Code" class="form-control mt-2" />
+                <div *ngIf="addr.get('pinCode')?.invalid && (addr.get('pinCode')?.touched )" class="text-danger">
+
+                  Pin Code is required.
+                </div>
+              </div>
+              <input type="text" formControlName="latitude" placeholder="Mobile Number" class="form-control" />
+              <input type="text" formControlName="longitude" placeholder="Mobile Number" class="form-control" />
+               <div class="form-check mt-2 d-flex align-items-center">
+    <input type="checkbox" class="form-check-input me-2" formControlName="isDefault"  style="width:10px"/>
+    <label class="form-check-label">Set as Default </label>
+  </div>
+ 
+            </div>
+            <hr />
+          </div>
+        </div>
+             <label><input type="checkbox" formControlName="isDefault" /> Set as Default</label>
+        <!-- Next & Previous Buttons -->
+        <div class="d-flex justify-content-between mt-3">
+          <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()">Previous</button>
+          <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">Save</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+   
+<div class="popup-overlay" *ngIf="showpopup">
+  <div class="popup-card">
+    <div class="popup-icon">
+      <img src="assets/images/check.png" alt="Success" />
+    </div>
+    <h4>Profile Updated Successfully</h4>
+    <button class="btn btn-success" (click)="showpopup=false">Back</button>
+  </div>
+</div>
+
+<div class="popups-overlay" *ngIf="showerrorpopup">
+  <div class="popups-card error-card">
+    <div class="popups-icon error-icon">
+    </div>
+    <h4>Profile Update Failed</h4>
+    <p>
+      {{ errorMessage || 'Something went wrong. Please try again later.' }}
+    </p>
+    <button class="btn btn-primary" (click)="showerrorpopup=false">Back</button>
+  </div>
+</div>
+
+
+
+

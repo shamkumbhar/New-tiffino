@@ -1,0 +1,246 @@
+.card {
+  width: 100%;
+  padding: 10px 20px;  /* Reduced padding to make the card smaller */
+  background-color: #ffffff;
+  border-radius: 8px;
+ 
+  position: fixed;  /* Fix card at the top of the screen */
+  top: 0;           /* Align at the top */
+  left: 0;          /* Align at the left */
+  right: 0;         /* Align at the right */
+  z-index: 9999;     /* Ensure card stays above other content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;      /* Allow height to adjust based on content */
+  padding-top: 10px; /* Reduced padding-top */
+  padding-bottom: 10px; /* Reduced padding-bottom */
+}
+
+/* Heading Styling */
+.heading {
+  font-size: 35px;  /* Reduced font size to make the heading smaller */
+  font-weight: bold;
+  color: #fd8300;
+  margin-bottom: 10px;  /* Reduced margin between heading and text */
+}
+
+/* Copyright Text */
+.card p {
+  margin-top: auto;
+  margin-bottom: 0;
+  text-align: center;
+  font-weight: bold;
+  font-size:20px;  /* Reduced font size */
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container for Centering Content */
+.container {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styling */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: #333;
+    font-weight: 700;
+}
+
+/* Section Styling */
+h2 {
+    font-size: 2em;
+    color: #4e4e4e;
+    margin-top: 30px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 5px;
+    font-weight: 600;
+}
+
+ p {
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: left; 
+    font-weight: 400;
+    /* Align paragraph text to the left */
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    font-size: 1.5em;
+    color: #444;
+    line-height: 1.5;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+/* Special List Item Styling */
+ul li strong {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Footer Styling */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1em;
+    color: #888;
+}
+
+footer p {
+    margin-bottom: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.6em;
+    }
+
+    ul li {
+        font-size: 1em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+}
+
+/* Highlighted Section Styling */
+.highlighted {
+    background-color: #f7f7f7;
+    padding: 15px;
+    border-left: 5px solid #007BFF;
+    margin-bottom: 20px;
+}
+
+/* Links Styling */
+a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Section Titles with Background */
+.section-title {
+    background-color: #e0e0e0;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 30px;
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #2a2a2a;
+}
+
+/* Content Block Styling for Different Sections */
+.content {
+    margin-top: 20px;
+}
+
+/* Improve spacing between sections */
+.content > h2 + p,
+.content > h2 + ul {
+    margin-top: 10px;
+}
+
+/* Margin for the last section */
+.content > h2:last-child {
+    margin-bottom: 30px;
+}
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    padding: 8px 15px;
+    text-align: center;
+  }
+
+  .heading {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .card p {
+    font-size: 16px;
+  }
+}
+
+/* === RESPONSIVE CONTAINER === */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 15px 10px;
+    margin-top: 100px; 
+    margin-left: 50px; /* Add space for fixed-top header */
+  }
+
+  h2 {
+    font-size: 1.4em;
+  }
+
+  p,
+  ul li {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    font-size: 20px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  p,
+  ul li {
+    font-size: 0.95em;
+  }
+
+  .container {
+    padding: 12px 12px;
+  }
+}

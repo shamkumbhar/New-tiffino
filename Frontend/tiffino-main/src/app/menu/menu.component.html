@@ -1,0 +1,172 @@
+<div class="menu-container">
+  <!-- Header Section -->
+  <div class="menu-header">
+    <div class="logo-section">
+      <span class="logo">🍱 Tiffino</span>
+      <p class="subtitle">Authentic Regional Cuisine</p>
+    </div>
+ 
+    <div class="search-section">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          class="search"
+          placeholder="Search states..."
+          (input)="selectedState = null"
+          aria-label="Search states"
+        />
+        <span class="search-icon">🔍</span>
+        <button
+          *ngIf="searchTerm"
+          class="clear-search"
+          (click)="clearSearch()"
+          aria-label="Clear search"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Popular States Quick Access -->
+  <div class="popular-section" *ngIf="!searchTerm && !selectedState">
+    <h3>🌟 Popular Cuisines</h3>
+    <div class="popular-grid">
+      <div
+        *ngFor="let cuisine of popularCuisines; trackBy: trackByState"
+        class="popular-card"
+        (click)="selectState(cuisine.state)"
+        [attr.aria-label]="'Select ' + cuisine.state + ' cuisine'"
+        tabindex="0"
+        (keydown.enter)="selectState(cuisine.state)"
+      >
+        <div class="popular-card-header">
+          <span class="state-name">{{ cuisine.state }}</span>
+          <span class="region-tag">{{ cuisine.region }}</span>
+        </div>
+        <div class="dish-preview">
+          {{ cuisine.dishes[0] }}
+          <span *ngIf="cuisine.dishes.length > 1">
+            +{{ cuisine.dishes.length - 1 }} more
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Regional Menu -->
+  <div class="regions-section">
+    <h3 *ngIf="!searchTerm">🗺️ Explore by Region</h3>
+    <h3 *ngIf="searchTerm">🔍 Search Results</h3>
+ 
+    <ul class="menu" role="menu">
+      <li
+        *ngFor="let region of regions; trackBy: trackByRegion"
+        class="menu-item"
+        [class.has-results]="getFilteredStates(region).length > 0"
+      >
+        <div
+          class="region"
+          (click)="toggleSubmenu(region)"
+          (keydown.enter)="toggleSubmenu(region)"
+          [attr.aria-expanded]="activeSubmenu === region"
+          [class.active]="activeSubmenu === region"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="'Toggle ' + region + ' menu'"
+        >
+          <span class="region-name">{{ region }}</span>
+          <div class="region-info">
+            <span class="state-count">{{ getFilteredStates(region).length }} states</span>
+            <span class="arrow">{{ activeSubmenu === region ? '▲' : '▼' }}</span>
+          </div>
+        </div>
+ 
+        <ul
+          class="submenu"
+          *ngIf="activeSubmenu === region && getFilteredStates(region).length > 0"
+          role="menu"
+          [attr.aria-label]="region + ' states'"
+        >
+          <li
+            *ngFor="let state of getFilteredStates(region); trackBy: trackByName"
+            class="state"
+            [class.popular]="isStatePopular(state)"
+            [class.selected]="selectedState === state"
+            (click)="selectState(state)"
+            (keydown.enter)="selectState(state)"
+            role="menuitem"
+            tabindex="0"
+            [attr.aria-label]="'Select ' + state + ' cuisine'"
+          >
+            <span class="state-name">{{ state }}</span>
+            <span *ngIf="isStatePopular(state)" class="popular-badge">⭐</span>
+          </li>
+        </ul>
+ 
+        <div
+          class="no-results"
+          *ngIf="searchTerm && getFilteredStates(region).length === 0"
+        >
+          No states found in {{ region }}
+        </div>
+      </li>
+    </ul>
+ 
+    <div
+      class="no-results-global"
+      *ngIf="isGlobalSearchEmpty()"
+    >
+      <div class="no-results-content">
+        <span class="no-results-icon">🔍</span>
+        <h4>No states found</h4>
+        <p>Try searching with different keywords</p>
+        <button class="clear-search-btn" (click)="clearSearch()">Clear Search</button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Cuisine Details -->
+  <div class="cuisine-info" *ngIf="selectedState" role="region" [attr.aria-label]="selectedState + ' cuisine details'">
+    <div class="cuisine-header">
+      <h3>{{ selectedState }} Specialties</h3>
+      <span class="cuisine-region">{{ getRegionByState(selectedState) }}</span>
+    </div>
+ 
+    <div class="dishes-container">
+      <div
+        *ngFor="let dish of getDishes(selectedState); let i = index"
+        class="dish-item"
+        [style.animation-delay]="i * 0.1 + 's'"
+      >
+        <span class="dish-icon">🍲</span>
+        <span class="dish-name">{{ dish }}</span>
+      </div>
+    </div>
+ 
+    <div class="action-buttons">
+      <button
+        class="btn btn-primary"
+        (click)="navigateTo('/order')"
+        [attr.aria-label]="'Order ' + selectedState + ' cuisine'"
+      >
+        🛒 Order Now
+      </button>
+      <button
+        class="btn btn-secondary"
+        (click)="navigateTo('/subscription')"
+        [attr.aria-label]="'Subscribe to ' + selectedState + ' cuisine'"
+      >
+        📅 Subscribe
+      </button>
+      <button
+        class="btn btn-outline"
+        (click)="navigateTo('/cuisines')"
+        aria-label="Explore more cuisines"
+      >
+        🌟 Explore More
+      </button>
+    </div>
+  </div>
+</div>

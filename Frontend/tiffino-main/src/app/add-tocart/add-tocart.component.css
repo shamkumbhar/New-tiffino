@@ -1,0 +1,114 @@
+.card-img-top {
+  height: 100px;
+  object-fit: cover;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/*.card {
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-weight: 700;
+}*/
+
+.badge {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+
+
+
+.cart-img {
+  height: 20%;
+  width: 50%;
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  width:90%;
+  margin-left: 100px;
+}
+
+.card:hover {
+  transform: scale(1.01);
+}
+
+.card-title {
+  font-weight: 600;
+}
+@media (max-width: 768px) {
+  .card {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Stack image and content vertically */
+  .row.g-0.align-items-center {
+    flex-direction: column;
+  }
+
+  .col-md-4, .col-md-8 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .cart-img {
+    border-radius: 8px 8px 0 0;
+    height: 180px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 12px; /* Added gap to separate buttons nicely */
+  }
+
+  .btn-group .d-flex.align-items-center.justify-content-between {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px; /* Space between quantity controls and price */
+  }
+
+  .btn-group .fw-bold.text-dark.fs-5 {
+    margin-right: 0 !important;
+    margin-top: 8px;
+  }
+
+  .btn-success, .btn-warning, .btn-danger, .btn-outline-secondary {
+    flex: 1 1 100%;
+    min-width: unset;
+    width: 100%;      /* force full width */
+    text-align: center;
+    margin: 0;        /* remove margin to keep gap consistent */
+  }
+}
+
+/* Smaller mobile */
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  .btn-success, .btn-warning, .btn-danger, .btn-outline-secondary {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+  }
+}

@@ -1,0 +1,348 @@
+
+.signup-wrapper {
+  display: flex;
+  flex-direction: row; /* Ensures side-by-side layout */
+  max-width: 1000px;
+  margin: 60px auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(to right, #fdfbfb, #ebedee);
+  min-height: 500px;
+}
+
+.signup-image {
+  flex: 0 0 50%;
+  min-width: 50%;
+  max-width: 50%;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Right: Form Section */
+.signup-container {
+  flex: 0 0 50%;
+  background: #ffffff;
+  padding: 24px 32px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 0;
+  min-height: 500px;
+}
+
+/* Headings */
+.signup-container h2 {
+  font-size: 22px;
+  color: #e23744;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="password"],
+input[type="number"],
+input[type=file],
+ input[type="text"],
+  input[type="email"],
+  input[type="date"],
+select{
+  width: 80%;
+  min-width: 250px; /* Ensure a minimum width */
+  padding: 10px;
+  margin-bottom: 14px;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  margin-left: 40px;
+}
+
+input:focus {
+  border-color: #e23744;
+  box-shadow: 0 0 4px rgba(226, 55, 68, 0.2);
+}
+
+/* Error Messages */
+.error p {
+  color: red;
+  font-size: 13px;
+  margin: 0 0 8px;
+  width: 80%;
+  margin-left: 60px;
+}
+
+/* Buttons */
+button {
+  width: 350px;
+ 
+  padding: 12px;
+  background-color: #e23744;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+button:disabled {
+  background-color: #fca5ab;
+  cursor: not-allowed;
+}
+
+/* Google Sign-In */
+
+.google-signin-button {
+  cursor: pointer;
+  transition: all 0.3s ease;  /* Smooth transition for hover effect */
+  margin-left: 40px;  /* Moves it to the left */
+  margin-right: auto; 
+  margin-top: 10px;
+   background-color: rgb(255, 255, 255);    /* Black background */
+  color: rgb(0, 0, 0) !important;
+  border: 2px solid black;/* Smooth transition for hover effect */
+}
+
+
+.google-signin-button:hover {
+  background-color: #000000 !important;  /* Darker background on hover */
+  color: rgb(230, 230, 230) !important;             /* White text on hover */
+}
+
+.google-signin-button img {
+  margin-right: 10px; /* Space between the Google icon and text */
+}
+/* Checkbox & Terms */
+.form-check {
+  width: 80%;
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.form-check input {
+  margin-right: 6px;
+}
+
+.form-check a {
+  color: #e23744;
+  text-decoration: none;
+}
+
+.form-check a:hover {
+  text-decoration: underline;
+}
+
+/* Signup prompt */
+.signup-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;  /* Center horizontally */
+  gap: 3px;
+  margin-top: 2px;  /* Adds top margin to move it down slightly */
+  font-size: 16px;
+  width: 100%; 
+  margin-right: 30px;
+  font-weight: bold; /* Ensures it takes the full width of its container */
+}
+
+.signup-prompt a {
+  color: #e23744;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.signup-prompt a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive (stack on smaller screens) */
+@media (max-width: 768px) {
+  .signup-wrapper {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .signup-image {
+    height: 200px;
+  }
+
+  .signup-image img {
+    height: 100%;
+  }
+
+  .signup-container {
+    border-radius: 0 0 12px 12px;
+    padding: 24px 20px;
+  }
+
+ 
+  button,
+  .google-signin-btn {
+  width: 100%;
+  }
+
+  .error p,
+  .form-check {
+    width: 100%;
+  }
+}
+
+.back {
+  background-image: url('https://png.pngtree.com/thumb_back/fh260/background/20240411/pngtree-food-mockup-recipe-concept-image_15654335.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+:host {
+  display: block;
+  height: 100vh;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  
+}
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Popup card with increased height 
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top-color: #dc3545;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Popup Overlay */
+.popup-overlay,
+.error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Success and Error Card */
+.popup-card,
+.error-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.popup-icon svg,
+.error-icon svg {
+  margin-bottom: 10px;
+}
+
+.popup-icon svg {
+  fill: green;
+}
+
+.error-icon svg {
+  fill: red;
+}
+
+.wide-select {
+  width: 100%;        /* Or use a fixed value like 400px */
+  max-width: 500px;   /* Optional: limit max width */
+}
+.weak {
+  color: red;
+  font-weight: bold;
+}
+
+.medium {
+  color: orange;
+  font-weight: bold;
+}
+
+.strong {
+  color: green;
+  font-weight: bold;
+}
+
+.errors p {
+  margin-left: 160px;
+  color: #d9534f;
+  margin: 4px 0;
+  font-size: 14px;
+}
+.loading-placeholder{
+  margin-top: 100px;
+  font-size: 30px;
+  
+}
+
+

@@ -1,0 +1,91 @@
+<div class="payment-container">
+  <h2>Payment Summary</h2>
+
+  <!-- Order Details -->
+  <div *ngIf="orderData && orderData.orderItems && cuisines.length; else loadingTemplate" class="product-info">
+    <div *ngFor="let cus of cuisines; let i = index">
+      <h3 class="fw-bold">{{ i + 1 }}: {{ cus.name }}</h3>
+      <p class="ms-3"><strong>Price:</strong> ₹{{ cus.price_per_meal }}</p>
+      <p class="ms-3"><strong>Diet Preferences:</strong> {{ cus.dietary_preferences }}</p>
+      <p class="ms-3"><strong>Spice Level:</strong> {{ cus.spice_level }}</p>
+    </div>
+
+    <h3 class="mt-4">Total: ₹{{ orderData.totalAmount }}</h3>
+    <p>Status: <strong>{{ orderData.status || 'PENDING' }}</strong></p>
+
+    <div class="d-flex gap-3 mt-3">
+      <button (click)="confirmOrder()" class="btn btn-success">Confirm</button>
+      <button (click)="cancelOrder()" class="btn btn-danger">Cancel</button>
+    </div>
+  </div>
+
+  <ng-template #loadingTemplate>
+    <p>Loading order details...</p>
+  </ng-template>
+</div>
+
+
+<div *ngIf="loading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+<div class="popup-overlay" *ngIf="showpopup">
+  <div class="popup-card success-animate">
+    <div class="popup-icon mb-3">
+      <img src="assets/images/check.png" alt="Success" />
+    </div>
+    <h2 class="text-success fw-bold">Order Successful</h2>
+    <p class="mt-2 fs-5">Status: <span class="text-primary">{{ ordersucessdata?.status }}</span></p>
+    <p class="fs-5">Amount: ₹<span class="text-dark fw-bold">{{ ordersucessdata?.amount }}</span></p>
+   <p class="fs-5"><span class="text-dark fw-bold">Your Order Assigned To</span></p>
+<ng-container *ngIf="deliverpartnerData?.deliveryPartner as partner">
+      <p class="fs-5">Name: <span class="text-dark fw-bold">{{ partner.name }}</span></p>
+
+      <button class="btn btn-outline-success mt-4 px-4" (click)="navigateToPartner()">
+        View Delivery Partner Profile
+      </button>
+   
+    </ng-container>
+           <button class="btn btn-outline-danger px-4" (click)="bACK()">Close</button>
+  </div>
+</div>
+
+
+
+<div class="popup-overlay" *ngIf="showErrorPopup">
+  <div class="popup-card error-animate">
+    <div class="popup-icon mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h2 class="text-danger fw-bold">Order Failed</h2>
+    <p class="fs-5">Something went wrong. Please try again.</p>
+    <button class="btn btn-danger mt-3 px-4" (click)="showErrorPopup = false">Retry</button>
+  </div>
+</div>
+
+<div class="popup-overlay" *ngIf="showpopups">
+  <div class="popup-card success-animate">
+    <div class="popup-icon mb-3">
+      <img src="assets/images/check.png" alt="Success" />
+    </div>
+    <h2 class="text-success fw-bold">Order cancelled Successfully</h2>
+    <p class="mt-2 fs-5">Status: <span class="text-primary">{{ ordercacel?.status }}</span></p>
+    <p class="fs-5">Amount: ₹<span class="text-dark fw-bold">{{ ordercacel?.amount }}</span></p>
+    <a routerLink="/login" class="btn btn-outline-success mt-4 px-4">Go to Login</a>
+  </div>
+</div>
+
+<div class="popup-overlay" *ngIf="showerror">
+  <div class="popup-card error-animate">
+    <div class="popup-icon mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h2 class="text-danger fw-bold">Order cancelled was Failed</h2>
+    <p class="fs-5"> Please try again Later</p>
+    <button class="btn btn-danger mt-3 px-4" (click)="showerror = false">Retry</button>
+  </div>
+</div>

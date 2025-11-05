@@ -1,0 +1,200 @@
+<div class="filter-search-bar">
+  <select [(ngModel)]="selectedRegionId" (change)="onRegionChange()" class="form-select filter-select">
+    <option [value]="null">-- Select Region --</option>
+    <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+  </select>
+
+  <select [(ngModel)]="selectedStateId" (change)="onStateChange()" class=" ms-3 form-select filter-select">
+    <option [value]="null">-- Select State --</option>
+    <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+  </select>
+  
+  <button class="btn btn-outline-secondary clear-btn ms-3" (click)="clearFilter()">Clear</button>
+  
+  <div class="search-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input
+      type="text"
+      placeholder="Search cuisine or state ....."
+      [(ngModel)]="searchTerm"
+      (input)="applySearch()"
+    />
+    <button class="btn btn-primary" style="margin-left: 40px;" (click)="openEditPopup()">Add cuisines</button>
+    <!--<button class="btn btn-success" style="margin-left: 40px;">Update cuisines</button>-->
+    <!-- <button class="btn btn-primary" style="margin-left: 40px;">Delete cuisines</button> -->
+  </div>
+</div>
+
+<!-- Meal Cards Section -->
+<div class="page-layout">
+  <div class="meal-container">
+    <div class="meal_type">
+      <div class="meal-card" *ngFor="let item of cusines">
+        <img [src]="item.imageUrl" alt="{{ item.name }}" />
+        <p><strong>Region:</strong> {{ item.regionName }}</p>
+        <p><strong>State:</strong> {{ item.stateName }}</p>
+        <h2 class="title">{{ item.name }}</h2>
+        <p><i class="bi bi-list-ul"></i> <strong>Meal Type:</strong> {{ item.meal_type || 'N/A' }}</p>
+        <p><i class="bi bi-fire"></i> <strong>Calories:</strong> {{ item.calories || 'N/A' }}</p>
+        <p><i class="bi bi-battery-half"></i> <strong>Carbs:</strong> {{item.carbs || 'N/A' }}</p>
+        <p><i class="bi bi-droplet"></i> <strong>Fats:</strong> {{item.fats || 'N/A' }}</p>
+             <p><i class="bi bi-thermometer"></i> <strong>Spice Level:</strong> {{item.spice_level || 'N/A' }}</p>
+        <p><i class="bi bi-weight me-3 text-secondary"></i> <strong>Protein:</strong> {{item.protein || 'N/A' }}</p>
+        <p><i class="me-3 text-secondary"></i> <strong>Price Per Meal:</strong> ₹{{item.price_per_meal }}</p>
+        <button (click)="addToCart(item)">
+          <i class="bi bi-cart-plus-fill"></i> Add to Cart
+        </button>
+        <button (click)="navigate(item.id)" class="ms-3 ">View Product</button>
+          <button (click)="deletecusine(item.id)" class="">delete Product</button>
+      </div>
+        
+    </div>
+  </div>
+</div>
+
+<!-- Modal Popup to Add Cuisine -->
+<div class="modal-backdrop" *ngIf="showEditPopup">
+  <div class="modal-container">
+    <div class="container mt-5">
+      <h2 class="text-center fs-2 fw-bold">Add New Cuisine</h2>
+
+      <form [formGroup]="cuisineForm" (ngSubmit)="onSubmit()" class="mt-4">
+        
+        <!-- Step Navigation -->
+        <div class="steps-navigation">
+          <button type="button" (click)="goToStep(1)" [class.active]="step === 1">Step 1</button>
+          <button type="button" (click)="goToStep(2)" [class.active]="step === 2">Step 2</button>
+          <button type="button" (click)="goToStep(3)" [class.active]="step === 3">Step 3</button>
+        </div>
+
+        <!-- Step 1: General Information -->
+        <div *ngIf="step === 1" class="step">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Name</label>
+              <input type="text" formControlName="name" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Image URL</label>
+              <input type="text" formControlName="imageUrl" class="form-control" placeholder="Paste image URL" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>State</label>
+              <select class="form-control" formControlName="stateId">
+                <option [value]="null" disabled selected>Select State</option>
+                <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Meal Type</label>
+              <select class="form-control" formControlName="meal_type">
+                <option *ngFor="let mt of MealType" [value]="mt">{{ mt }}</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-primary w-50" style="margin-left: 200px;" type="button" (click)="goToStep(2)">Next</button>
+          <button class="btn btn-danger w-50"style="margin-left:200px;" (click)="closeEditPopup()">cancel</button>
+        </div>
+
+        <!-- Step 2: Pricing & Availability -->
+        <div *ngIf="step === 2" class="step">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label>Price per Meal</label>
+              <input type="number" formControlName="price_per_meal" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Price per Week</label>
+              <input type="number" formControlName="price_per_week" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Price per Month</label>
+              <input type="number" formControlName="price_per_month" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Currency</label>
+              <input type="text" formControlName="currency" class="form-control" />
+            </div>
+            <div class="col-md-4 mb-3 form-check">
+              <label>
+                <input type="checkbox" class="form-check-input" formControlName="is_offer_active" />
+                Offer Active
+              </label>
+            </div>
+            <div class="col-md-4 mb-3 form-check">
+              <label>
+                <input type="checkbox" class="form-check-input" formControlName="is_available" />
+                Available
+              </label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Available Days</label>
+              <select class="form-control" formControlName="available_days" multiple>
+                <option *ngFor="let day of AvailableDay" [value]="day">{{ day }}</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-secondary" type="button" (click)="goToStep(1)">Back</button>
+          <button class="btn btn-primary" type="button" (click)="goToStep(3)">Next</button>
+        </div>
+
+        <!-- Step 3: Nutritional Info -->
+        <div *ngIf="step === 3" class="step">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label>Calories</label>
+              <input type="number" formControlName="calories" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Protein</label>
+              <input type="text" formControlName="protein" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Carbs</label>
+              <input type="text" formControlName="carbs" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Fats</label>
+              <input type="text" formControlName="fats" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Fiber</label>
+              <input type="text" formControlName="fiber" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Allergen Preferences</label>
+              <select class="form-control" formControlName="allergen_preferences">
+                <option [value]="null">None</option>
+                <option *ngFor="let allergen of AllergenPreference" [value]="allergen">{{ allergen }}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Dietary Preferences</label>
+              <select class="form-control" formControlName="dietary_preferences">
+                <option [value]="null">None</option>
+                <option *ngFor="let diet of DietaryPreference" [value]="diet">{{ diet }}</option>
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Preparation Time</label>
+              <input type="text" formControlName="preparation_time" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label>Spice Level</label>
+              <select class="form-control" formControlName="spice_level">
+                <option *ngFor="let s of SpiceLevel" [value]="s">{{ s }}</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn btn-secondary" type="button" (click)="goToStep(2)">Back</button>
+          <button class="btn btn-primary" type="submit" [disabled]="submitting">
+            {{ submitting ? 'Submitting...' : 'Add Cuisine' }}
+          </button>
+        </div>
+        
+      </form>
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>
+</div>

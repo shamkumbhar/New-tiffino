@@ -1,0 +1,89 @@
+<form [formGroup]="planForm" (ngSubmit)="onSubmit()" class="card p-4 shadow-sm">
+  <h3 class="mb-4"> Create Meal Subscription Plan</h3>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Plan Name</label>
+    <input formControlName="name" id="name" class="form-control" maxlength="30" />
+      <div class="error" *ngIf="f['name'].touched && f['name'].invalid">
+            <p *ngIf="f['name'].errors?.['required']">Plan Name is required</p>
+             <p *ngIf="f['name'].hasError('pattern')">Plan Name should not contain numbers special characters</p>
+          </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea formControlName="description" id="description" rows="3" class="form-control"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="mealType" class="form-label">Meal Type</label>
+    <select formControlName="mealType" id="mealType" class="form-select">
+      <option value="" disabled>Select meal type</option>
+      <option value="BREAKFAST">Breakfast</option>
+      <option value="LUNCH">Lunch</option>
+      <option value="DINNER">Dinner</option>
+    </select>
+  <div class="error" *ngIf="f['mealType'].touched && f['mealType'].invalid">
+            <p *ngIf="f[' mealType'].errors?.['required']">Meal Type is required</p>
+       
+          </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="mealFrequency" class="form-label">Meal Frequency</label>
+    <select formControlName="mealFrequency" id="mealFrequency" class="form-select">
+      <option value="" disabled>Select frequency</option>
+      <option value="DAILY">Daily</option>
+      <option value="WEEKLY">Weekly</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="durationInWeeks" class="form-label">Duration (in weeks)</label>
+    <input type="number" formControlName="durationInWeeks" id="durationInWeeks" class="form-control" />
+  </div>
+
+  <div class="mb-3">
+    <label for="price" class="form-label">Price (₹)</label>
+    <input type="number" formControlName="price" id="price" class="form-control" />
+  </div>
+
+  <div class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" formControlName="isActive" id="isActive" />
+    <label class="form-check-label" for="isActive">Is Active?</label>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="planForm.invalid">
+    Create Plan
+  </button>
+</form>
+
+<div class="container mt-4" *ngIf="plans.length">
+  <div *ngFor="let plan of plans" class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h5 class="card-title"><p><strong>Plan Name:</strong>{{ plan.name }}</h5>
+      <p class="card-text text-muted"> <p><strong>Plan Description:</strong>{{ plan.description }}</p>
+      <p class="card-text text-muted"> <p><strong>durationInWeeks:</strong>{{ plan.durationInWeeks }}</p>
+      <p><strong>Price:</strong> <span class="badge bg-info text-dark">{{ plan. 
+price
+ }}</span></p>
+     
+
+      <!-- Buttons -->
+      <div class="mt-3">
+        <button class="btn btn-warning btn-sm me-2" (click)="deactivate(plan.id)">
+          <i class="bi bi-x-octagon"></i> Deactivate
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="deletePlan(plan.id)">
+          <i class="bi bi-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="!plans.length" class="text-center text-muted mt-5">
+  <i class="bi bi-exclamation-circle fs-3"></i>
+  <p>No plans available.</p>
+</div>

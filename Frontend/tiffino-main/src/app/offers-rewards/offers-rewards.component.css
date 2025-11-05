@@ -1,0 +1,213 @@
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background: #f5f5f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* === Header === */
+.d-flex svg {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.d-flex svg:hover {
+  transform: translateX(-4px);
+}
+
+/* === Loyalty Section === */
+.rewards-card {
+  background: linear-gradient(135deg, #8e24aa, #6a1b9a);
+  border-radius: 14px;
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+.rewards-card:hover {
+  transform: translateY(-5px);
+}
+.amount {
+  font-size: 36px;
+  margin: 0;
+}
+.loyalty {
+  font-size: 14px;
+  color: #ffe082;
+}
+.gift-box img {
+  width: 160px;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+.gift-box img:hover {
+  transform: rotate(-4deg) scale(1.05);
+}
+
+/* === Scratch Cards === */
+.scratch-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.scratch-card:hover {
+  transform: translateY(-6px);
+}
+.scratch-top p {
+  font-weight: 500;
+  
+}
+.scratch-content {
+  margin-top: 12px;
+  animation: fadeInUp 0.5s ease-out;
+}
+.scratch-content.hidden {
+  visibility: hidden;
+}
+.scratch-overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, #eee, #eee 10px, #ddd 10px, #ddd 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+  color: #555;
+}
+
+/* === Vouchers Section === */
+.voucher-card {
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 18px 18px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 6px solid #ff7043;
+}
+.voucher-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+.voucher-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.voucher-icon {
+  font-size: 30px;
+}
+.voucher-card h5 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+.voucher-card p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #555;
+}
+.countdown-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #d50000;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: bold;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+.btn-redeem {
+  margin-top: 16px;
+  display: block;
+  width: 100%;
+  background: #ff7043;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
+  transition: background 0.3s ease;
+}
+.btn-redeem:hover {
+  background: #f4511e;
+}
+.btn-redeem:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.btn-redeem a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* === Referral Section === */
+.referral-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 480px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+.referral-card:hover {
+  transform: translateY(-5px);
+}
+.referral-image img {
+  max-width: 140px;
+  margin-bottom: 16px;
+}
+.refer-button {
+  margin-top: 14px;
+  padding: 12px 24px;
+  background: #6a1b9a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: background 0.3s ease;
+}
+.refer-button:hover {
+  background: #4a148c;
+}
+
+/* === Animations === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(213, 0, 0, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(213, 0, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(213, 0, 0, 0); }
+}
+
+/* === Responsiveness === */
+@media (max-width: 768px) {
+  .voucher-card, .scratch-card {
+    max-width: 100%;
+  }
+  .gift-box img {
+    width: 140px;
+  }
+}

@@ -1,0 +1,320 @@
+.tracking-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.tracking-title {
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 24px;
+}
+
+.summary-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.order-status {
+  text-align: center;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+.order-status .shipped {
+  color: green;
+  font-weight: bold;
+}
+
+.estimated-delivery {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.tracking-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin: 40px 0;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+  color: #bbb;
+  font-size: 12px;
+}
+
+.step .icon {
+  width: 32px;
+  height: 32px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.step.active {
+  color: #333;
+}
+
+.step.active .icon {
+  background-color: #ff6f00;
+  color: #fff;
+}
+
+.line {
+  height: 4px;
+  flex: 1;
+  background-color: #e0e0e0;
+  margin: 0 5px;
+  position: relative;
+  top: 16px;
+}
+
+.step.active ~ .line {
+  background-color: #e0e0e0;
+}
+
+.order-history-container {
+  padding: 30px;
+  max-width: 1000px;
+  margin: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Order Summary */
+.order-summary {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-top i {
+  color: #0d6efd;
+  margin-right: 5px;
+}
+
+.divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 15px 0;
+}
+
+.order-info p {
+  margin: 6px 0;
+  color: #333;
+}
+
+.order-info i {
+  color: #6c757d;
+  margin-right: 6px;
+}
+
+/* Button */
+.text-end {
+  margin-top: 15px;
+}
+
+/* Cuisine Details */
+.cuisine-detail-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.cuisine-detail {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+  gap: 20px;
+}
+
+.cuisine-detail:last-child {
+  border-bottom: none;
+}
+
+.cuisine-image-wrapper img {
+  width: 250px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.cuisine-text h6 {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: #222;
+}
+
+.cuisine-text p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+}
+
+.offer-text {
+  font-weight: 600;
+  color: #dc3545;
+  margin-top: 5px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 20px;
+}
+
+.order-card {
+  width: 90%;
+  max-width: 940px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  padding: 15px 20px;
+  animation: fadeInUp 0.5s ease forwards;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+.order-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* PENDING */
+.status-badge.pending {
+  background-color: #d3a920; /* light yellow */
+  color: #856404;           /* dark gold text */
+}
+
+/* CONFIRMED */
+.status-badge.confirmed {
+  background-color: #cce5ff; /* light blue */
+  color: #004085;           /* dark blue text */
+}
+
+/* PREPARING */
+.status-badge.preparing {
+  background-color: #d4edda; /* light green */
+  color: #155724;           /* dark green text */
+}
+
+/* EN ROUTE */
+.status-badge.en_route {
+  background-color: #d1ecf1; /* light cyan */
+  color: #0c5460;           /* teal text */
+}
+
+/* DELIVERED */
+.status-badge.delivered {
+  background-color: #e2f0d9; /* light pastel green */
+  color: #1e4620;           /* deep green text */
+}
+
+.order-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin-top: 10px;
+}
+
+.order-info {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.order-info span {
+  font-weight: bold;
+  color: #333;
+}
+
+.progress-bar {
+  margin-top: 12px;
+  height: 6px;
+  background: #eee;
+  border-radius: 4px;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #4facfe, #00f2fe);
+  border-radius: 4px;
+}
+
+.order-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.order-footer .btn {
+  border-radius: 6px;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+}

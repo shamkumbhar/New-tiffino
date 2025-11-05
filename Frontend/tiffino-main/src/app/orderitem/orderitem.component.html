@@ -1,0 +1,180 @@
+<div class="container mt-4" *ngIf="isBulkOrder && orderItems.length > 0">
+  <h2 class="fw-bold">Order Summary ({{ orderItems.length }} items)</h2>
+  <div *ngFor="let item of orderItems" class="card shadow-sm mb-3 p-3">
+    <h4>{{ item.cuisine.name }}</h4>
+    <img [src]="item.cuisine.imageUrl" alt="{{ item.cuisine.name }}" class="img-fluid rounded" style="max-width: 200px;">
+    <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+    <p><strong>Total Price:</strong> ₹{{ item.totalPrice }}</p>
+   
+  </div>
+  <div class="mt-3">
+    <h3 class="fw-bold">Total Payable: ₹{{ totalAmount }}</h3>
+  </div>
+</div>
+
+<!-- Single Item Fallback -->
+<div *ngIf="!isBulkOrder && orderItem" class="container mt-4">
+  <h2 class="fw-bold">Order Summary</h2>
+  <div class="card shadow-sm p-3">
+    <h4>{{ orderItem.cuisine.name }}</h4>
+    <img [src]="orderItem.cuisine.imageUrl" alt="{{ orderItem.cuisine.name }}" class="img-fluid rounded" style="max-width: 300px;">
+    <p><strong>Meal Type:</strong> {{ orderItem.cuisine.meal_type }}</p>
+    <p><strong>Quantity:</strong> {{ orderItem.quantity }}</p>
+    <p><strong> Price:</strong> ₹{{ orderItem.totalPrice }}</p>
+   
+  </div>
+<div class="mt-3">
+    <h3 class="fw-bold">Total Payable: ₹{{ totalAmount }}</h3>
+  </div>
+</div>
+
+
+<form [formGroup]="orderForm" (ngSubmit)="placeOrder()" class="container py-3">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <h2 class="mb-1">Place Order</h2>
+    <p class="text-muted m-0">Review your details and choose delivery options.</p>
+  </div>
+
+  <!-- User & Address Summary -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Your Details</h5>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="small text-muted">User Name</div>
+          <div class="fw-semibold">{{ name.fullName || '-' }}</div>
+        </div>
+
+        <div class="col-md-8" *ngIf="address; else noAddress">
+          <div class="small text-muted">Delivery Address</div>
+          <div class="fw-semibold">
+            {{ address.addressLine1 }}
+            <span *ngIf="address.addressLine2">, {{ address.addressLine2 }}</span>,
+            {{ address.city }}, {{ address.state }} - {{ address.pincode }}
+            <span *ngIf="address.addressType"> ({{ address.addressType }})</span>
+          </div>
+        </div>
+        <ng-template #noAddress>
+          <div class="col-md-8">
+            <div class="alert alert-warning p-2 m-0">
+              No address found. Please add an address to continue.
+            </div>
+          </div>
+        </ng-template>
+
+  
+        <!--<div class="mb-3">
+  <button type="button" class="btn btn-outline-primary" (click)="fetchCurrentLocation()">
+    📍 Use My Current Location
+  </button>
+</div>-->
+
+<!-- Dropdown to select address type -->
+<div class="mb-3">
+  <label class="form-label">Address Type</label>
+  <select class="form-select" formControlName="addressType">
+    <option value="HOME">Home</option>
+    <option value="WORK">Work</option>
+    <option value="OTHER">Other</option>
+  </select>
+</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Type -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Order Type</h5>
+      <div class="d-flex gap-4">
+        <label class="form-check">
+          <input class="form-check-input" type="radio" formControlName="orderType" value="ONE_TIME">
+          <span class="ms-2">One_Time</span>
+        </label>
+
+        <label class="form-check">
+          <input class="form-check-input" type="radio" formControlName="orderType" value="SUBSCRIPTION">
+          <span class="ms-2">SUBSCRIPTION</span>
+        </label>
+      </div>
+
+      <!-- Subscription info / warning -->
+      <div class="mt-3" *ngIf="orderForm.value.orderType === 'SUBSCRIPTION'">
+        <div *ngIf="subscriptionId; else noSub" class="alert alert-success py-2 mb-0">
+          <div class="small">Active Subscription</div>
+          <div class="fw-semibold">
+            ID: {{ subscriptionId }} &nbsp; • &nbsp;
+            Type: {{ subscriptionType || '—' }}
+          </div>
+        </div>
+        <ng-template #noSub>
+          <div class="alert alert-danger py-2 mb-0">
+            You selected <strong>Subscription</strong> but no active subscription was found for your account.
+            Please create/activate a subscription first.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delivery Options -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Delivery Options</h5>
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Delivery Date</label>
+          <input type="date" class="form-control" formControlName="deliveryDate">
+          <div class="text-danger small mt-1" *ngIf="orderForm.get('deliveryDate')?.touched && orderForm.get('deliveryDate')?.invalid">
+            Delivery date is required.
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label">Delivery Time Slot</label>
+          <select class="form-select" formControlName="deliveryTimeSlot">
+            <option value="" disabled>Select a time slot</option>
+            <option value="MORNING">MORNING (8:00–11:00)</option>
+            <option value="AFTERNOON">AFTERNOON (12:00–15:00)</option>
+            <option value="EVENING">EVENING(16:00–19:00)</option>
+            
+          </select>
+          <div class="text-danger small mt-1" *ngIf="orderForm.get('deliveryTimeSlot')?.touched && orderForm.get('deliveryTimeSlot')?.invalid">
+            Delivery time slot is required.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment -->
+ 
+
+  <!-- Footer Actions -->
+  <div class="d-flex justify-content-end gap-2">
+    <button type="button" class="btn btn-outline-secondary" (click)="orderForm.reset({ orderType: 'ONE_TIME' })">
+      Reset
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="
+        orderForm.invalid ||
+        !userId ||
+        !address ||
+        (orderForm.value.orderType === 'SUBSCRIPTION' && !subscriptionId)
+      ">
+      Place Order
+    </button>
+  </div>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+
+
+

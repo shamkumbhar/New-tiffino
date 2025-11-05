@@ -1,0 +1,118 @@
+
+<div class="d-flex justify-content-flex-start  mb-4">
+ <svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" fill="currentColor" class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+    <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1"/>
+  </svg>
+  <h2>Rewards and Offers</h2>
+ 
+</div>
+
+<!-- ✅ Safe display with *ngIf -->
+<div class="rewards-container" *ngIf="userdata && userdata.totalEarnedPoints !== undefined">
+  <div class="rewards-card">
+    <div class="cashback-info">
+      <div class="points-row">
+        <div class="cashback-block">
+          <p class="label">Total Points Won</p>
+          <h1 class="amount">{{ userdata.totalEarnedPoints }}</h1>
+        </div>
+      </div>
+
+      <p class="timestamp">Last updated: {{ userdata.lastUpdated | date: 'medium' }}</p>
+      <p class="loyalty">Loyalty Tier: <strong>{{ userdata.loyaltyTier }}</strong></p>
+    </div>
+
+    <div class="gift-box">
+      <img src="https://www.shutterstock.com/image-vector/cash-back-cashback-payment-money-260nw-2602704667.jpg" alt="Gift Box" />
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row justify-content-flex-start">
+    <div class="col-md-4 col-sm-6 mb-4" *ngFor="let reward of rewards">
+      <div class="scratch-card-container">
+        <div class="scratch-card">
+          <div class="scratch-top">
+            <p><strong>Reward:</strong> {{ reward.transactionType }}</p>
+            <p><strong>Source:</strong> {{ reward.source }}</p>
+          </div>
+
+          <div class="scratch-content" [class.hidden]="!reward.revealed">
+            <h3>🎉 +{{ reward.pointsChange }} Points</h3>
+            <p>Status: {{ reward.status }}</p>
+          </div>
+
+          <div class="scratch-overlay" *ngIf="!reward.revealed" (click)="reward.revealed = true">
+            <p>Scratch Me!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="mb-4">🎁 Your Vouchers & Offers</h2>
+
+<div class="cards-container row">
+  <!-- Vouchers -->
+  <div class="col-md-4 mb-4" *ngFor="let v of vouchers">
+    <div class="voucher-card">
+      <div class="voucher-header">
+        <span class="voucher-icon">🎟️</span>
+        <div>
+          <h5><strong>Code:</strong> {{ v.code }}</h5>
+   
+        </div>
+      </div>
+
+      <p><strong>Discount:</strong> 
+        {{ v.discountType === 'FLAT' ? '₹' + v.discountValue : v.discountValue + '%' }}
+      </p>
+      <p><strong>Min Order:</strong> ₹{{ v.minOrderAmount }}</p>
+      <p><strong>Max Discount:</strong> ₹{{ v.maxDiscountAmount || 'N/A' }}</p>
+      <p><strong>Expiry:</strong> {{ v.expiryDate | date:'mediumDate' }}</p>
+
+      <p><strong>Status:</strong> 
+        <span [ngClass]="v.isActive ? 'text-success' : 'text-danger'">
+          {{ v.isActive ? 'Active' : 'Inactive' }}
+        </span>
+      </p>
+
+      <button class="btn btn-redeem mt-2" [disabled]="!v.isActive">
+        <a routerLink="/foodcart">Redeem</a>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="referral-card vertical">
+  <div class="referral-image">
+    <img src="assets/images/image-3.png" alt="Referral Gift" />
+  </div>
+
+  <div class="referral-content">
+    <h2 class="referral-title">Invite & Earn Cashback!</h2>
+
+    <p class="referral-text">
+      Share your referral link with your friends and family.
+      When they sign up and complete their first transaction,
+      you both get exciting cashback rewards. No limit on the number of invites!
+    </p>
+
+    <p class="referral-steps">
+      <strong>How it works:</strong><br />
+      1. Share your referral link<br />
+      2. Friend signs up using your link<br />
+      3. Both of you earn rewards after first payment<br/>
+      4.you`ll get cashback only when they install after your invitation<br/>
+      5.incase of they already installed our app the cashback wont be credited
+    </p>
+
+    <button class="refer-button" (click)="shareReferral()">Refer Now</button>
+  </div>
+</div>

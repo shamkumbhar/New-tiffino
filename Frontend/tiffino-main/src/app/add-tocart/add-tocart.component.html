@@ -1,0 +1,86 @@
+
+<h2 class="text-center mt-4 mb-4 fw-bold fs-2">Your Cart Items</h2>
+
+  <div *ngIf="mappedCartItems.length === 0" class="text-center text-muted h2 d-flex justify-content-center align-items-center" >
+    Cart is empty.
+  </div>
+<div class="text-end mt-3 mb-3 " style="margin-right: 50px;">
+   <button
+    class="btn btn-success me-2"
+    [disabled]="!hasSelectedItems()"
+    (click)="orderSelectedItems()">
+    <i class="bi bi-basket me-1"></i> Order Selected Items
+  </button>
+  <button
+    class="btn btn-primary"
+    [disabled]="mappedCartItems.length === 0"
+    (click)="orderFullCart()">
+    <i class="bi bi-cart-check me-2"></i> Order All Items
+  </button>
+</div>
+  <div *ngFor="let item of mappedCartItems" class="card mb-4 shadow-sm animate__animated animate__fadeInUp">
+     <div class="form-check ms-3 mt-2">
+    <input class="form-check-input" type="checkbox" [value]="item" [(ngModel)]="item.selected" name="selectedItems">
+    <label class="form-check-label">Select to Order</label>
+  </div>
+    <div class="row g-0 align-items-center">
+      <div class="col-md-4">
+        <img [src]="item.cuisine.imageUrl" class="img-fluid rounded-start cart-img " [alt]="item.cuisine.name" >
+      </div>
+
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title fs-5">{{ item.cuisine.name }}</h5>
+          <p class="card-text mb-4 fs-6 me-4" style="line-height: 1.2;">
+            <strong>Meal Type:</strong> {{ item.cuisine.meal_type }}<br>
+            <strong>Calories:</strong> {{ item.cuisine.calories }} kcal | 
+            <strong>Protein:</strong> {{ item.cuisine.protein }} | 
+            <strong>Fats:</strong> {{ item.cuisine.fats }} | 
+            <strong>Carbs:</strong> {{ item.cuisine.carbs }}<br>
+            <strong>Spice Level:</strong> {{ item.cuisine.spice_level }} |
+            <strong>Prep Time:</strong> {{ item.cuisine.preparation_time }}<br>
+            <strong>Price:</strong> ₹{{ item.cuisine.price_per_meal }}<br>
+            <strong>Allergen:</strong> {{ item.cuisine.allergen_preferences }}<br>
+            <strong>Available:</strong> {{ item.cuisine.available_days.join(', ') }}
+          </p>
+            
+
+
+
+<!-- Buttons below quantity -->
+<div class="btn-group mt-2">
+    <div class="d-flex align-items-center justify-content-between mb-2" style="width: 300px; ">
+  <div class="d-flex align-items-center">
+    <strong class="me-2">Quantity:</strong>
+    <button class="btn btn-outline-danger btn-sm me-2" (click)="updateQuantity(item, -1)">
+      <i class="bi bi-dash-lg"></i>
+    </button>
+    <span class="fw-bold">{{ item.quantity }}</span>
+    <button class="btn btn-outline-warning  btn-sm ms-2 me-3" (click)="updateQuantity(item, 1)">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+
+  <span class="fw-bold text-dark fs-5 me-4" style="margin-right:680px;">₹{{ item.totalPrice }}</span>
+</div>
+  <button class="btn btn-success btn-md  me-2" (click)="orderItem(item)">
+    <i class="bi bi-bag-check me-1"></i> Order
+  </button>
+  <button class="btn btn-warning btn-md me-2" (click)="navigate(item.cuisine.id)">
+    <i class="bi bi-info-circle me-1"></i> View Details
+  </button>
+  <button class="btn btn-danger btn-md me-2" (click)="remove(item.cartItemId)">
+    <i class="bi bi-cart-x me-1"></i> Remove
+  </button>
+  <button class="btn btn-outline-secondary btn-md" (click)="clearCart()">
+    <i class="bi bi-trash3 me-1"></i> Clear Cart
+  </button>
+</div>
+
+
+        
+        </div>
+      </div>
+    </div>
+  </div>
+

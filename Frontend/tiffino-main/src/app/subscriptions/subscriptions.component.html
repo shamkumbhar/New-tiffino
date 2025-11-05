@@ -1,0 +1,422 @@
+
+
+<div class="container mt-4">
+  <!-- Search Input Box -->
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <input 
+        type="text" 
+        class="form-control mb-4 search" 
+        placeholder="Search for a plan..." 
+        [(ngModel)]="searchQuery" 
+        (input)="search()" 
+        debounce="500" />
+    </div>
+
+  <button class="filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Filter</button>
+
+<div class="offcanvas offcanvas-end h-70" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h2 class="offcanvas-title fw-bold" id="offcanvasRightLabel">Choose Filter Options</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <!-- Filter by Status -->
+        <div class="mb-3">
+          <h5>Plan Status</h5>
+          <div>
+            <input 
+              type="checkbox" 
+              id="active" 
+              [(ngModel)]="isActive" 
+              (change)="applyFilters()" 
+              /> Active
+            <input 
+              type="checkbox" 
+              id="inactive" 
+              [(ngModel)]="isInactive" 
+              (change)="applyFilters()" 
+              /> Inactive
+          </div>
+        </div>
+
+        <!-- Filter by Meal Type -->
+        <div class="mb-3">
+          <h5>Meal Type</h5>
+          <div>
+            <input 
+              type="checkbox" 
+              id="breakfast" 
+              [(ngModel)]="isBreakfast" 
+              (change)="applyFilters()" 
+              /> Breakfast
+            <input 
+              type="checkbox" 
+              id="lunch" 
+              [(ngModel)]="isLunch" 
+              (change)="applyFilters()" 
+              /> Lunch
+            <input 
+              type="checkbox" 
+              id="dinner" 
+              [(ngModel)]="isDinner" 
+              (change)="applyFilters()" 
+              /> Dinner
+          </div>
+        </div>
+
+        <!-- Apply and Clear Filters -->
+        <div class="d-flex justify-content-between">
+          <button class="btn btn-secondary" (click)="clearFilters()">Clear Filters</button>
+          <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+<div *ngIf="plansi.length === 0" class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm border-0 rounded-3 bg-light text-center p-4">
+        <i class="bi bi-search fs-1 text-muted"></i>
+        <h5 class="mt-3 text-danger">No Plans Found</h5>
+        <p class="text-muted">We couldn't find any plans matching your search. Try again with a different query.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Display Plan Cards -->
+  <div class="row">
+    <div *ngFor="let plan of plansi" class="col-md-6 col-lg-4 mb-4">
+      <div class="card shadow-sm border-0 h-100 rounded-3">
+        <div class="card-body">
+          <h5 class="card-title text-center text-primary fw-bold">
+            <i class="bi bi-box2-heart me-2 text-danger"></i>{{ plan.name }}
+          </h5>
+          <p class="card-text text-muted text-center mb-3">
+            {{ plan.description }}
+          </p>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item border-0">
+              <i class="bi bi-egg-fried text-warning me-2 fs-5"></i>
+              <strong>Meal Type:</strong> {{ plan.mealType }}
+            </li>
+            <li class="list-group-item border-0">
+              <i class="bi bi-calendar-range text-success me-2 fs-5"></i>
+              <strong>Frequency:</strong> {{ plan.mealFrequency }}
+            </li>
+            <li class="list-group-item border-0">
+              <i class="bi bi-clock-history text-info me-2 fs-5"></i>
+              <strong>Duration:</strong> {{ plan.durationInWeeks }} weeks
+            </li>
+            <li class="list-group-item border-0">
+              <i class="bi bi-currency-rupee text-dark me-2 fs-5"></i>
+              <strong>Price:</strong> ₹{{ plan.price }}
+            </li>
+            <li class="list-group-item border-0" *ngIf="plan.isActive">
+              <i class="bi bi-check-circle-fill text-success me-2 fs-5"></i>
+              <strong>Status:</strong> Active
+            </li>
+            <li class="list-group-item border-0" *ngIf="!plan.isActive">
+              <i class="bi bi-x-circle-fill text-danger me-2 fs-5"></i>
+              <strong>Status:</strong> Inactive
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="back1"> 
+  <div class="back">
+    <div class="container mt-3 d-flex justify-content-end">
+      <button class="btn btn-outline-primary w-25 buttons" (click)="showActiveCard = !showActiveCard">
+        <i class="bi bi-eye-fill me-2 fs-5"></i>
+        {{ showActiveCard ? 'Hide Active Subscription' : 'View Active Subscription' }}
+      </button>
+    </div>
+
+    <!-- Show this whole section only when toggle is ON -->
+    <div class="container mt-4 fade-toggle" *ngIf="showActiveCard">
+      
+      <!-- If subscriptions exist -->
+      <ng-container *ngIf="subscriptions.length > 0; else noSubscription">
+        <div *ngFor="let sub of subscriptions" class="card shadow-lg border-0 rounded-4 bg-light mb-4">
+          <div class="card-body p-4">
+            <h4 class="card-title text-center text-success fw-bold mb-4 d-flex">
+              <i class="bi bi-person-vcard me-2 fs-2 text-success"></i>Your Active Subscription
+            </h4>
+
+            <div class="row text-secondary">
+              <div class="col-md-6 mb-3">
+                <p><i class="bi bi-box2-heart me-2 text-danger"></i><strong>Plan:</strong> {{ sub.subscriptionPlan.name }}</p>
+                <p><i class="bi bi-patch-check-fill me-2 text-primary"></i><strong>Status:</strong> 
+                  <span class="badge bg-info text-dark">{{ sub.status }}</span>
+                </p>
+                <p><i class="bi bi-calendar-check me-2 text-success"></i><strong>Start:</strong> {{ sub.startDate }}</p>
+                <p><i class="bi bi-calendar-x me-2 text-danger"></i><strong>End:</strong> {{ sub.endDate }}</p>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <p><i class="bi bi-clock-history me-2 text-warning"></i><strong>Next Renewal:</strong> {{ sub.nextRenewalDate }}</p>
+                <p><i class="bi bi-currency-exchange me-2 text-info"></i><strong>Billing Cycle:</strong> {{ sub.customizations.billingCycle || 'N/A' }}</p>
+                <p><i class="bi bi-fire me-2 text-danger"></i><strong>Spice Level:</strong> {{ sub.customizations.spiceLevel || 'N/A' }}</p>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-warning btn-sm rounded-pill px-4 me-2 shadow-sm w-25 h-25"
+                      (click)="pausesubscription(sub)">
+                <i class="bi bi-pause-circle me-1 fs-5"></i> Pause
+              </button>
+
+              <button class="w-25 btn btn-success btn-sm rounded-pill px-4 me-2 shadow-sm"
+                      (click)="resumesubscription(sub)">
+                <i class="bi bi-play-circle me-1 fs-5"></i> Resume
+              </button>
+
+              <button class="w-25 btn btn-danger btn-sm rounded-pill px-4 shadow-sm"
+                      (click)="cancelsubscription(sub)">
+                <i class="bi bi-x-circle me-1 fs-5"></i> Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Show this only if no subscriptions -->
+      <ng-template #noSubscription>
+        <div class="alert alert-warning text-center shadow-sm py-4 mt-4">
+          <i class="bi bi-exclamation-circle fs-3 text-danger d-block mb-2"></i>
+          <h3 class="fw-bold">No active subscriptions found.</h3>
+          <p>Looks like you haven't subscribed yet. Check out our plans to get started!</p>
+         
+        </div>
+      </ng-template>
+
+    </div> <!-- End of showActiveCard block -->
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="back">
+  <div class="split-screen">
+    
+    <div class="left-side">
+  <div class="card shadow-lg border-0 rounded-4 overflow-hidden my-5" style="background-color: #f4a261;">
+    <div class="row g-0">
+      
+      <!-- Image on the left -->
+      <div class="col-md-5 d-flex justify-content-center align-items-center  p-4">
+        <img src="./assets/fitness.webp" alt="Meal Plan" class="img-fluid" style="max-height: 300px; background-color: #f4a261;" />
+      </div>
+      
+      <!-- Content on the right -->
+      <div class="col-md-7 d-flex flex-column justify-content-center align-items-center p-5 text-white">
+        <h1 class="text-danger fw-bold mb-3">Start Your Journey</h1>
+        <h2 class="text-muted mb-4">Custom meal subscriptions made just for you!</h2>
+        <h2 class="fw-bold mb-3 text-center" id="subscribe-plan">
+          Subscribe to Our Meal Plans 
+        </h2>
+        <!-- Optional: Back/Home button -->
+        <a [routerLink]="['/']" class="btn btn-light mt-4 text-orange fw-bold" [fragment]="'home'">Back to Home Page</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card shadow-lg border-0 rounded-4 overflow-hidden my-5" style="background-color: #4697c3;">
+  <div class="right-side" style="min-width: 900px;" >
+      <div class="subscription-container" >
+        <h2 class="text-danger">Subscribe to a Plan</h2>
+
+       
+        <div class="select-wrapper">
+  <label>Select a Plan</label>
+  <div class="select-container">
+    <select [(ngModel)]="selectedPlanId" class="form-control" name="plan" required>
+      <option [ngValue]="null" disabled>Select Plan</option>
+      <option *ngFor="let plan of plans" [ngValue]="plan.id">
+        {{ plan.name }} - ₹{{ plan.price }} ({{ plan.durationInWeeks }} weeks)
+      </option>
+    </select>
+
+   
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+         viewBox="0 0 16 16" class="dropdown-icon">
+      <path fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 
+           0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 
+           0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </div>
+</div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="select-wrapper">
+  <label>Meal Type</label>
+  <div class="select-container">
+    <select formControlName="MealType" class="form-control mb-2" placeholder="select meal type">
+      <option [ngValue]="null" disabled>Select Meal Type</option>
+      <option value="BREAKFAST">BREAKFAST</option>
+      <option value="DINNER">DINNER</option>
+      <option value="LUNCH">LUNCH</option>
+      <option value="SNACK">SNACK</option>
+    </select>
+    <div class="error" *ngIf="f['MealType'].touched && f['MealType'].invalid ">
+      <p *ngIf="f['MealType'].errors?.['required']">Meal type is required</p>
+    </div>
+
+   
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+         viewBox="0 0 16 16" class="dropdown-icon">
+      <path fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 
+           0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 
+           0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </div>
+</div>
+
+
+         <div class="select-wrapper">
+  <label>Billing Cycle</label>
+  <div class="select-container">
+    <select formControlName="BillingCycle" class="form-control mb-2">
+      <option [ngValue]="null" disabled>Select Billing Cycle</option>
+      <option value="DAILY">DAILY</option>
+      <option value="WEEKLY">WEEKLY</option>
+      <option value="MONTHLY">MONTHLY</option>
+      <option value="QUARTERLY">QUARTERLY</option>
+      <option value="YEARLY">YEARLY</option>
+    </select>
+ <div class="error" *ngIf="f['BillingCycle'].touched && f['BillingCycle'].invalid ">
+      <p *ngIf="f['BillingCycle'].errors?.['required']">Billing cycle is required</p>
+    </div>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+         viewBox="0 0 16 16" class="dropdown-icon">
+      <path fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 
+           0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 
+           0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </div>
+</div>
+
+       <div class="select-wrapper">
+  <label>Spice Level</label>
+  <div class="select-container">
+    <select formControlName="SpiceLevel" class="form-control mb-2">
+      <option [ngValue]="null" disabled>Select Spice Level</option>
+      <option value="MILD">MILD</option>
+      <option value="MEDIUM">MEDIUM</option>
+      <option value="SPICY">SPICY</option>
+      <option value="EXTRA_SPICY">EXTRA SPICY</option>
+    </select>
+ <div class="error" *ngIf="f['SpiceLevel'].touched && f['SpiceLevel'].invalid ">
+      <p *ngIf="f['SpiceLevel'].errors?.['required']">Billing cycle is required</p>
+    </div>
+   
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+         viewBox="0 0 16 16" class="dropdown-icon">
+      <path fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 
+           0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 
+           0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </div>
+</div>
+
+   <div class="select-wrapper">
+  <label>Status</label>
+  <div class="select-container">
+    <select formControlName="SubscriptionStatus" class="form-control mb-2">
+      <option [ngValue]="null" disabled>Select Status</option>
+      <option value="ACTIVE">ACTIVE</option>
+      <option value="PAUSED">PAUSED</option>
+      <option value="CANCELLED">CANCELLED</option>
+      <option value="EXPIRED">EXPIRED</option>
+    </select>
+    <div class="error" *ngIf="f['SubscriptionStatus'].touched && f['SubscriptionStatus'].invalid ">
+      <p *ngIf="f['SubscriptionStatus'].errors?.['required']">subscription is required</p>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+         viewBox="0 0 16 16" class="dropdown-icon">
+      <path fill-rule="evenodd"
+        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 
+           0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 
+           0l-6-6a.5.5 0 0 1 0-.708z"/>
+    </svg>
+  </div>
+</div>
+
+          <div class="form-check form-switch my-3 ">
+         
+  <input 
+    class="form-check-input me-2 " 
+    type="checkbox" 
+    formControlName="autoRenew" 
+    id="autoRenewSwitch" />
+    <label 
+    class="form-check-label fw-semibold " 
+    for="autoRenewSwitch">
+    Enable Auto-Renew
+  </label>
+</div>   
+  <br><br>
+
+          <label class="diet">Dietary Restrictions</label>
+          <input type="text" formControlName="dietaryRestrictions" class="form-control mb-3" placeholder="enter diet restrictions"/>
+
+          <button type="submit" class="btn btn-danger w-100">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+
+
+<div class="popup-overlay" *ngIf="showpopup">
+  <div class="popup-card">
+    <div class="popup-icon">
+      <img src="assets/images/check.png" style="width:40px;height:40px" alt="imgsri"/>
+    </div>
+    <h4>subsciption Successful</h4>
+    <h4><a routerLink="/login" class="btn btn-danger">Login</a></h4>
+  </div>
+</div>
+
+
+<div class="error-overlay" *ngIf="showErrorPopup">
+  <div class="error-card">
+    <div class="error-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h4>subscription Failed</h4>
+    <p>{{ errorMessage }}</p>
+    <button class="btn btn-danger mt-3" (click)="showErrorPopup = false">Close</button>
+  </div>
+</div>
+
+
+
+
+
+
+
+

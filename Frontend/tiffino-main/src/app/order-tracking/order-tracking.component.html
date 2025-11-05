@@ -1,0 +1,134 @@
+<p>order-tracking works!</p>
+<div class="tracking-container">
+  <h2 class="tracking-title">ORDER TRACKING PAGE</h2>
+  <div class="summary-box">
+    <div><strong>ORDER PLACED</strong><br />{{ orderData?.orderDate | date: 'dd MMM' }}</div>
+    <div><strong>TOTAL</strong><br />INR:{{ orderData?.totalAmount }} </div>
+    <div><strong>SHIP TO</strong><br />{{ orderData?.addresses[0]?.addressLine1 }},{{ orderData?.addresses[0]?.city }}</div>
+    <div><strong>ORDER</strong><br />#{{ orderData?.id }}</div>
+  </div>
+ 
+  <div class="order-status">
+    Order Status: <span [ngClass]="{'shipped': orderData?.status === 'SHIPPED'}">{{ orderData?.status }}</span>
+  </div>
+  <div class="estimated-delivery">
+    Estimated Delivery Date: 17 Jan. - 19 Jan.
+  </div>
+ 
+  <div class="tracking-progress">
+    <div class="step active">
+      <div class="icon">✔</div>
+      <div class="label">Order Placed</div>
+      <div class="date">{{orderData?.orderDate}}</div>
+    </div>
+    <div class="line"></div>
+    <div class="step active">
+      <div class="icon">🚚</div>
+      <div class="label">Dispatched</div>
+      <div class="date">
+{{orderData?.deliveryDate}}</div>
+    </div>
+    <div class="line"></div>
+    <div class="step" [ngClass]="{'active': orderData?.status === 'DELIVERED'}">
+      <div class="icon">📦</div>
+      <div class="label">Delivered</div>
+      <div class="date">{{orderData?.
+deliveryDate}}</div>
+    </div>
+  </div>
+</div>
+ 
+ 
+<div class="order-history-container">
+  <!-- Order Summary -->
+  <div class="order-summary">
+    <div class="order-top">
+      <div>
+        <i class="bi bi-receipt-cutoff"></i> <strong>Order #{{ orderData ?.id }}</strong>
+      </div>
+      <div class="order-date">
+        <i class="bi bi-calendar3"></i> {{ orderData ?.orderDate | date: 'medium' }}
+      </div>
+    </div>
+ 
+    <div class="divider"></div>
+ 
+    <div class="order-info">
+      <p><i class="bi bi-truck"></i> <strong>Delivery Date:</strong> {{ orderData ?.deliveryDate }} ({{ orderData ?.deliveryTimeSlot }})</p>
+      <p><i class="bi bi-geo-alt-fill"></i> <strong>Address:</strong>
+        {{ orderData ?.addresses[0]?.addressLine1 }}, {{ orderData?.addresses[0]?.addressLine2 }},
+        {{ orderData?.addresses[0]?.city }}, {{ orderData?.addresses[0]?.state }}
+      </p>
+      <p><i class="bi bi-geo"></i> <strong>Coordinates:</strong> Lat: {{ orderData?.addresses[0]?.latitude }}, Long: {{ orderData ?.addresses[0]?.longitude }}</p>
+      <p><i class="bi bi-arrow-repeat"></i> <strong>Subscription:</strong> {{ orderData ?.isSubscription ? 'Yes' : 'No' }}</p>
+      <p><i class="bi bi-cash-stack"></i> <strong>Total:</strong> ₹{{ orderData ?.totalAmount }}</p>
+    </div>
+ 
+    <div class="text-end">
+      <button class="btn btn-sm btn-outline-primary" (click)="toggleCuisines()">
+        <i class="bi" [ngClass]="showCuisines ? 'bi-eye-slash' : 'bi-eye'"></i>
+        {{ showCuisines ? 'Hide Meal Details' : 'View Meal Details' }}
+      </button>
+    </div>
+  </div>
+ 
+  <!-- Cuisine Details -->
+  <div *ngIf="showCuisines" class="cuisine-detail-section">
+    <h5 class="section-heading fs-3"> Meal Details</h5>
+    <div class="cuisine-detail" *ngFor="let cus of cuisines">
+      <div class="cuisine-image-wrapper">
+        <img [src]="cus.imageUrl" [alt]="cus.name" />
+      </div>
+      <div class="cuisine-text">
+        <h4 class="fs-5">{{ cus.name }} <span class="badge bg-success">{{ cus.dietary_preferences }}</span></h4>
+        <p><i class="bi bi-fire"></i> <strong>Calories:</strong> {{ cus.calories }} kcal</p>
+        <p><i class="bi bi-currency-rupee"></i> <strong>Price:</strong> ₹{{ cus.price_per_meal }}</p>
+        <p><i class="bi bi-clock-history"></i> <strong>Prep Time:</strong> {{ cus.preparation_time }}</p>
+        <p><i class="bi bi-thermometer-half"></i> <strong>Spice Level:</strong> {{ cus.spice_level }}</p>
+        <p><i class="bi bi-award-fill"></i> <strong>Allergen:</strong> {{ cus.allergen_preferences }}</p>
+        <p><i class="bi bi-bar-chart-line"></i> <strong>Macros:</strong>
+          Protein: {{ cus.protein }},
+          Carbs: {{ cus.carbs }},
+          Fats: {{ cus.fats }},
+          Fiber: {{ cus.fiber }}
+        </p>
+   
+      </div>
+    </div>
+  </div>
+</div>
+ 
+   <!-- <h1 class="mt-2 fw-bold text-center">Ordered details</h1>
+      <div class="orders-container" *ngIf="orders?.length; else noOrders">
+  <div
+    class="order-card"
+    *ngFor="let order of orders; let i = index"
+    [@fadeIn]="i"
+  >
+    <div class="order-header">
+      <h3 class="order-title">Order #{{ order.id }}</h3>
+      <span class="status-badge" [ngClass]="getStatusClass(order.status)">
+        {{ order.status }}
+      </span>
+      <small class="order-date">{{ order.orderDate | date: 'medium' }}</small>
+    </div>
+ 
+    <div class="order-body">
+      <div><strong>Type:</strong> {{ order.orderType }}</div>
+      <div><strong>Subscription:</strong> {{ order.subscriptionType || 'N/A' }}</div>
+      <div><strong>Delivery:</strong> {{ order.deliveryDate | date }} ({{ order.deliveryTimeSlot }})</div>
+      <div><strong>Total:</strong> ₹{{ order.totalAmount }}</div>
+      <div><strong>Discount:</strong> ₹{{ order.appliedDiscount }}</div>
+      <div *ngIf="order.notes"><strong>Notes:</strong> {{ order.notes }}</div>
+    </div>
+ 
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="getProgressPercent(order.status)"></div>
+    </div>
+  </div>
+</div>
+ 
+<ng-template #noOrders>
+  <p class="no-orders text-center">No orders found</p>
+</ng-template>
+      </div> -->

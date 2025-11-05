@@ -1,0 +1,342 @@
+<div class="settings-container">
+  <div class="top-right-menu">
+  <div class="menu-icon" (click)="toggleMenu()">
+    <i class="bi bi-three-dots"></i> <!-- This is the 3-dots icon -->
+  </div>
+ 
+  <div class="dropdown" *ngIf="showMenu">
+    <button (click)="toggleMenu()"><i class="bi bi-x "></i></button>
+     <button (click)="goToOrders()">My Profile</button>
+    <button (click)="goToHelp()">Help</button>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
+  <h2>{{ 'SETTINGS' | translate }}</h2>
+    <div class="live-time">
+    {{'CURRENT_TIME' | translate }}({{ selectedTimeZone }}):
+    <strong>{{ formatDateInTimezone(currentDate, selectedTimeZone) }}</strong>
+  </div>
+ 
+<!-- Notification toggle -->
+<section class="setting-section">
+  <label class="fs-5">{{'ENABLE_NOTIFICATIONS' | translate}}</label>
+  <label class="switch">
+    <input type="checkbox" [(ngModel)]="notificationsEnabled" (change)="toggleNotifications()" />
+    <span class="slider"></span>
+  </label>
+</section>
+<!-- Notification sound toggle -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'NOTIFICATION_SOUND' | translate }}</label>
+  <label class="switch">
+    <input type="checkbox" [(ngModel)]="notificationSound" (change)="saveSettings()" />
+    <span class="slider"></span>
+  </label>
+</section>
+ 
+<!-- Language selector -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'LANGUAGE' | translate }}</label>
+  <select class="form-select w-2" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+    <option value="en">English</option>
+    <option value="hi">हिंदी</option>
+  </select>
+</section>
+ 
+<!-- Dark mode toggle -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'DARK_MODE' | translate }}</label>
+  <label class="switch">
+    <input type="checkbox" [(ngModel)]="darkMode" (change)="toggleTheme()" />
+    <span class="slider"></span>
+  </label>
+</section>
+ 
+<!-- Timezone selector -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'SELECT_TIMEZONE' | translate }}</label>
+  <select class="form-select w-2" [(ngModel)]="selectedTimeZone" (change)="saveSettings()">
+    <option *ngFor="let zone of timeZones" [value]="zone">{{ zone }}</option>
+  </select>
+</section>
+ 
+<!-- Pause subscription -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'PAUSE_SUBSCRIPTION' | translate }}</label>
+  <input type="checkbox" [(ngModel)]="pauseSubscription" (change)="saveSettings()" />
+</section>
+ 
+<!-- Zero-cost delivery -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'ZERO_COST_DELIVERY' | translate }}</label>
+  <input type="checkbox" [(ngModel)]="zeroCostDelivery" (change)="saveSettings()" />
+</section>
+ 
+<!-- Eco-friendly packaging -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'ECO_PACKAGING' | translate }}</label>
+  <input type="checkbox" [(ngModel)]="ecoPackaging" (change)="saveSettings()" />
+</section>
+ 
+<!-- Opt-out cutlery -->
+<section class="setting-section">
+  <label class="fs-5">{{ 'CUTLERY_OPTOUT' | translate }}</label>
+  <input type="checkbox" [(ngModel)]="cutleryOptOut" (change)="saveSettings()" />
+</section>
+ 
+<!-- Edit and Privacy -->
+<section class="setting-section">
+  <button class="btn btn-save" (click)="openEditPopup()">{{ 'EDIT_PROFILE' | translate }}</button>
+  <button class="btn btn-secondary" (click)="togglePrivacyBox()">{{ 'PRIVACY_SETTINGS' | translate }}</button>
+</section>
+ 
+<!-- Privacy Modal -->
+<div *ngIf="showPrivacyBox" class="privacy-overlay">
+  <div class="privacy-box-modal">
+    <h3>{{ 'PRIVACY_SETTINGS' | translate }}</h3>
+    <p>{{ 'PRIVACY_INFO_MESSAGE' | translate }}</p>
+    <button class="btn btn-danger" (click)="togglePrivacyBox()">{{ 'CLOSE' | translate }}</button>
+  </div>
+</div>
+ 
+ 
+ 
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>
+ 
+<div class="popup-overlay" *ngIf="showpopup">
+  <div class="popup-card">
+    <div class="popup-icon">
+      <img src="assets/images/check.png" alt="Success" />
+    </div>
+    <h4>{{'PROFILE UPDATED SUCCESSFULLY' | translate}}</h4>
+    <button class="btn btn-success" (click)="showpopup=false">Back</button>
+  </div>
+</div>
+ 
+ 
+<div class="popups-overlay" *ngIf="showerrorpopup">
+  <div class="popups-card error-card">
+    <div class="popups-icon error-icon">
+    </div>
+    <h4>Profile Update Failed</h4>
+    <p>
+      {{ 'Something went wrong. Please try again later.' }}
+    </p>
+    <button class="btn btn-primary" (click)="showerrorpopup=false">Back</button>
+  </div>
+</div>
+<div class="modal-backdrop" *ngIf="showEditPopup">
+ 
+  <div class="modal-container">
+   
+   
+ 
+   
+ 
+<div class="modal-backdrop" *ngIf="showEditPopup">
+  <div class="modal-container">
+    <form [formGroup]="editForm" (ngSubmit)="onUpdateUser()" enctype="multipart/form-data" novalidate>
+      <h3 class="fw-bold mb-4">{{ 'EDIT_PROFILE' | translate }}</h3>
+ 
+      <!-- Step 1: Personal Information -->
+      <div *ngIf="step === 1">
+        <div class="row">
+          <!-- Full Name -->
+          <div class="col-md-6 form-group">
+            <label>{{'FULL_NAME'| translate}}</label>
+            <input type="text" formControlName="fullName" [placeholder]="'FULL_NAME' | translate" class="form-control" />
+            <div class="text-danger" *ngIf="f['fullName'].touched && f['fullName'].invalid">
+              <p *ngIf="f['fullName'].hasError('pattern')">Full Name should not contain numbers or special characters.</p>
+              <p *ngIf="f['fullName'].hasError('required')">Full Name is required.</p>
+            </div>
+          </div>
+ 
+          <!-- Password -->
+          <div class="col-md-6 form-group">
+            <label>{{'PASSWORD'| translate}}:</label>
+            <input type="password" formControlName="password" [placeholder]="'PASSWORD' | translate" autocomplete="new-password" class="form-control" />
+            <div class="text-danger" *ngIf="f['password'].touched && f['password'].invalid">
+              <p *ngIf="f['password'].hasError('minlength')">Password must be at least 6 characters.</p>
+              <p *ngIf="f['password'].hasError('required')">Password is required.</p>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Email & Phone -->
+        <div class="row mt-3">
+          <div class="col-md-6 form-group">
+            <label>{{'EMAIL'| translate}}:</label>
+          <input type="email" formControlName="email" [placeholder]="'EMAIL' | translate" class="form-control" />
+            <div class="text-danger" *ngIf="f['email'].touched && f['email'].invalid">
+              <p *ngIf="f['email'].hasError('email')">Enter a valid email.</p>
+              <p *ngIf="f['email'].hasError('required')">Email is required.</p>
+            </div>
+          </div>
+ 
+          <div class="col-md-6 form-group">
+            <label>{{'MOBILE_NUMBER' | translate}}:</label>
+            <input type="text" formControlName="phoneNumber" [placeholder]="'MOBILE_NUMBER' | translate" class="form-control" />
+            <div class="text-danger" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+              <p *ngIf="f['phoneNumber'].hasError('pattern')">Enter a valid 10-digit number.</p>
+              <p *ngIf="f['phoneNumber'].hasError('required')">Phone number is required.</p>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Navigation -->
+        <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-primary" (click)="showEditPopup=false">{{ 'CANCEL' | translate }}</button>
+          <button type="button" class="btn btn-primary" (click)="goToNextStep()">Next</button>
+        </div>
+      </div>
+ 
+   
+      <div *ngIf="step === 2">
+        <div class="row">
+          <!-- First Name -->
+          <div class="col-md-6 form-group">
+            <label>{{'FIRST_NAME' | translate}}:</label>
+           <input type="text" formControlName="firstName" [placeholder]="'FIRST_NAME' | translate" class="form-control" />
+            <div class="text-danger" *ngIf="f['firstName'].touched && f['firstName'].invalid">
+              <p *ngIf="f['firstName'].hasError('pattern')">Only alphabetic characters allowed.</p>
+              <p *ngIf="f['firstName'].hasError('maxlength')">Max 20 characters allowed.</p>
+              <p *ngIf="f['firstName'].hasError('required')">First Name is required.</p>
+            </div>
+          </div>
+ 
+          <!-- Last Name -->
+          <div class="col-md-6 form-group">
+            <label>{{'LAST_NAME'| translate}}:</label>
+           <input type="text" formControlName="lastName" [placeholder]="'LAST_NAME' | translate" class="form-control" />
+            <div class="text-danger" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+              <p *ngIf="f['lastName'].hasError('pattern')">Only alphabetic characters allowed.</p>
+              <p *ngIf="f['lastName'].hasError('maxlength')">Max 20 characters allowed.</p>
+              <p *ngIf="f['lastName'].hasError('required')">Last Name is required.</p>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Gender & Role -->
+        <div class="row mt-3">
+          <div class="col-md-6 form-group">
+           <label>{{ 'GENDER' | translate }}</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="gender" value="male" id="male" />
+            <label class="form-check-label" for="male">{{ 'MALE' | translate }}</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="gender" value="female" id="female" />
+        <label class="form-check-label" for="female">{{ 'FEMALE' | translate }}</label>
+            </div>
+            <div class="text-danger" *ngIf="f['gender'].touched && f['gender'].invalid">
+              Gender is required.
+            </div>
+          </div>
+ 
+          <!-- Role -->
+          <div class="col-md-6 form-group">
+            <label>{{'ROLE'| translate}}Role:</label>
+            <select formControlName="role" class="form-select">
+              <option value="" disabled>{{ 'SELECT_ROLE' | translate }}</option>
+               <option value="CUSTOMER">{{ 'CUSTOMER' | translate }}</option>
+               <option value="ADMIN">{{ 'ADMIN' | translate }}</option>
+               <option value="DELIVERY_PARTNER" disabled>{{ 'DELIVERY_PARTNER' | translate }}</option>
+              <option value="SUBADMIN" disabled>{{ 'SUBADMIN' | translate }}
+            </select>
+            <div class="text-danger" *ngIf="f['role'].touched && f['role'].invalid">
+              Role is required.
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Profile Photo -->
+        <div class="row mt-3">
+          <div class="col-md-6 form-group">
+            <label>{{'PROFILE_PHOTO' | translate}}</label>
+            <input type="file" (change)="onFileChange($event)" class="form-control" />
+           <small *ngIf="imageError" class="text-danger">{{ 'IMAGE_ERROR' | translate }}</small>
+            <!-- Optional preview -->
+            <!-- <img *ngIf="previewUrl" [src]="previewUrl" alt="Profile preview" class="img-thumbnail mt-2" width="100" /> -->
+          </div>
+        </div>
+ 
+        <!-- Active Status -->
+        <div class="row mt-3">
+          <div class="col-md-6 form-group">
+            <label>{{'ACTIVE_STATUS' | translate}}:</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="isActive" [value]="true" id="active" />
+             <label class="form-check-label" for="active">{{ 'ACTIVE' | translate }}</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" formControlName="isActive" [value]="false" id="inactive" />
+             <label class="form-check-label" for="inactive">{{ 'INACTIVE' | translate }}</label>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Navigation -->
+        <div class="d-flex justify-content-between mt-4">
+          <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()">{{ 'CANCEL' | translate }}</button>
+          <button type="button" class="btn btn-primary" (click)="goToNextStep()">Next</button>
+        </div>
+      </div>
+ 
+      <!-- Step 3: Address Information -->
+      <div *ngIf="step === 3">
+        <div formArrayName="addresses">
+          <div *ngFor="let addr of addresses.controls; let i = index" [formGroupName]="i">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" formControlName="addressLine1" [placeholder]="'ADDRESS_LINE1' | translate" class="form-control" />
+                <div class="text-danger" *ngIf="addr.get('addressLine1')?.touched && addr.get('addressLine1')?.invalid">
+                  Address Line 1 is required.
+                </div>
+ 
+<input type="text" formControlName="addressLine2" [placeholder]="'ADDRESS_LINE2' | translate" class="form-control mt-2" />
+ 
+              <input type="text" formControlName="city" [placeholder]="'CITY' | translate" class="form-control mt-2" />
+                <div class="text-danger" *ngIf="addr.get('city')?.touched && addr.get('city')?.invalid">
+                  City is required.
+                </div>
+ 
+ 
+ 
+              <div class="col-md-6 form-group">
+               <input type="text" formControlName="state" [placeholder]="'STATE' | translate" class="form-control" />
+                <div class="text-danger" *ngIf="addr.get('state')?.touched && addr.get('state')?.invalid">
+                  State is required.
+                </div>
+              </div>
+                <input type="text" formControlName="pinCode" [placeholder]="'PIN_CODE' | translate" class="form-control mt-2" />
+                <div class="text-danger" *ngIf="addr.get('pinCode')?.touched && addr.get('pinCode')?.invalid">
+                  Pin Code is required.
+                </div>
+ 
+   <input type="number" formControlName="latitude" [placeholder]="'LATITUDE' | translate" class="form-control mt-2" />
+    <input type="number" formControlName="longitude" [placeholder]="'LONGITUDE' | translate" class="form-control mt-2" />
+ 
+                <select formControlName="addressType" class="form-select mt-2">
+                  <option value="Home">{{ 'HOME' | translate }}</option>
+                  <option value="Work">{{ 'WORK' | translate }}</option>
+                  <option value="Other">{{ 'OTHER' | translate }}</option>
+                </select>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+ 
+        <!-- Navigation -->
+        <div class="d-flex justify-content-between mt-3">
+          <button type="button" class="btn btn-secondary" (click)="goToPreviousStep()">{{ 'CANCEL' | translate }}</button>
+          <button type="submit" class="btn btn-success" [disabled]="editForm.invalid">{{ 'SAVE' | translate }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+ 
+ 

@@ -1,0 +1,96 @@
+
+<div class="card-container mt-4 rounded-3">
+  <div class="offer-card">
+    <h3>FOOD DELIVERY</h3>
+    <p class="sub">FROM RESTAURANTS</p>
+    <span class="offer">UPTO 60% OFF</span>
+    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="food" class="card-img">
+    <!-- <div class="arrow">&#8594;</div> -->
+  </div>
+ 
+  <div class="offer-card">
+    <h3>INSTANT DELIVERY</h3>
+    <p class="sub">INSTANT DELIVERY</p>
+    <span class="offer">UPTO 60% OFF</span>
+    <img src="https://cdn-icons-png.flaticon.com/512/590/590685.png" alt="grocery" class="card-img">
+    <!-- <div class="arrow">&#8594;</div> -->
+  </div>
+ 
+  <div class="offer-card">
+    <h3>DINEOUT</h3>
+    <p class="sub">EAT OUT & SAVE MORE</p>
+    <span class="offer">UPTO 50% OFF</span>
+    <img src="https://cdn-icons-png.flaticon.com/512/4780/4780045.png"  style="width: 250px;border-radius: 60px;" alt="dine" class="card-img">
+    <!-- <div class="arrow">&#8594;</div> -->
+  </div>
+</div>
+ <div class="controls mt-4">
+  <div class="search-wrapper">
+    <i class="bi bi-search search-icon"></i>
+    <input
+      type="text"
+      placeholder="Search cuisine or state ....."
+      [(ngModel)]="searchTerm"
+      (input)="applySearch()"
+    />
+  </div>
+</div>
+<div class="page-layout">
+  
+  <!-- Left: Filter card -->
+  <div class="filter-card">
+    <div class="card shadow-sm p-3 bg-white rounded border border-3" style="width:100%;">
+      <div class="card-body">
+        <h5 class="card-title mt-2">Filter by Region</h5>
+        <select [(ngModel)]="selectedRegionId" (change)="onRegionChange()" class="form-select w-100 mb-3">
+          <option [value]="null">-- Select Region --</option>
+          <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+        </select>
+
+        <h5 class="card-title">Filter by state</h5>
+        <select [(ngModel)]="selectedStateId"
+        class="form-select mb-3 state-select"
+        (change)="onStateChange()">
+  <option [value]="null">-- Select State --</option>
+  <option *ngFor="let state of states" [value]="state.id"  [title]="state.name">
+    {{ state.name.length > 23 ? (state.name | slice:0:23) + '…' : state.name }}
+  </option>
+</select>
+
+        <button class="btn btn-outline-danger mt-3 w-100" (click)="clearFilter()">Clear Filters</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: Meal cards -->
+  <div class="meal-container">
+    <div class="meal_type">
+      <div class="meal-card" *ngFor="let item of cusines">
+        <img [src]="item.imageUrl" alt="{{ item.name }}" />
+        <p><strong>Region:</strong> {{ item.regionName }}</p>
+        <p><strong>State:</strong> {{ item.stateName }}</p>
+        <h2 class="title">{{ item.name }}</h2>
+    <p><i class="bi bi-list-ul"></i> <strong>Meal Type:</strong> {{ item.meal_type || 'N/A' }}</p>
+    <p><i class="bi bi-fire"></i> <strong>Calories:</strong> {{ item.calories || 'N/A' }}</p>
+    <p><i class="bi bi-battery-half"></i> <strong>Carbs:</strong> {{item.carbs || 'N/A' }}</p>
+    <p><i class="bi bi-droplet"></i> <strong>Fats:</strong> {{item.fats || 'N/A' }}</p>
+       <p><i class="bi bi-thermometer"></i> <strong>Spice Level:</strong> {{item.spice_level || 'N/A' }}</p>
+    <p><i class="bi bi-weight me-3 text-secondary"></i> <strong>Protein:</strong> {{item.protein || 'N/A' }}</p>
+    <p><i class="me-3 text-secondary"></i> <strong>Price Per Meal:</strong> ₹{{item.price_per_meal }}</p>
+    <!-- add any other fields you want here -->
+    <button (click)="addToCart(item)" class="btn btn-success fs-7"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" fill="black" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+</svg>Add to Cart</button>
+<button  (click)="navigate(item.id)" class="ms-3 me-3 viewcart fs-6 " style="margin-top: 10px;height: 33px;">View Product</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="popup" *ngIf="showPopup">
+  <span>Item added to cart!</span>
+  <a routerLink="/addtocart" class="viewcart"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+</svg>View Cart</a>
+  <span class="close-icon" (click)="showPopup = false">&times;</span>
+</div>

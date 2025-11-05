@@ -1,0 +1,499 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Back section background */
+.back1 {
+  background-color: #ffffff;
+  padding: 20px 0;
+}
+
+.back {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Button container */
+.container.mt-3 {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.buttons {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: background-color 0.3s ease;
+}
+
+.buttons i {
+  font-size: 18px;
+}
+
+.buttons:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Subscription card */
+.card {
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 30px;
+}
+
+.card-body {
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #28a745;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-title i {
+  margin-right: 10px;
+}
+
+.card-text {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.card-body p {
+  margin-bottom: 10px;
+}
+
+.card-body .row {
+  margin-bottom: 20px;
+}
+
+.card-body p i {
+  font-size: 20px;
+}
+
+/* Buttons in the card */
+.card-body .btn {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 25px;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.card-body .btn-sm {
+  font-size: 14px;
+}
+
+.card-body .btn-warning {
+  background-color: #ff9800;
+  border-color: #ff9800;
+}
+
+.card-body .btn-warning:hover {
+  background-color: #e68900;
+}
+
+.card-body .btn-success {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.card-body .btn-success:hover {
+  background-color: #45a049;
+}
+
+.card-body .btn-danger {
+  background-color: #f44336;
+  border-color: #f44336;
+}
+
+.card-body .btn-danger:hover {
+  background-color: #e12f2f;
+}
+
+.card-body .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for subscription details */
+.card-body .row .col-md-6 p {
+  font-size: 16px;
+  color: #555;
+}
+
+.card-body .row .col-md-6 i {
+  font-size: 18px;
+}
+
+.card-body .row .col-md-6 .badge {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.card-footer {
+  text-align: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container.mt-3 {
+    margin-top: 15px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-body .btn {
+    width: 100%;
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  .card-body .row .col-md-6 p {
+    font-size: 14px;
+  }
+
+  .card-body .row .col-md-6 i {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container.mt-3 {
+    padding: 0 10px;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .card-body .btn-sm {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+
+
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f7f8fa;
+  margin: 0;
+  padding: 0;
+}
+
+/* Right-side container */
+.right-side {
+  max-width: 700px;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.subscription-container h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+
+}
+
+/* Select Wrapper */
+.select-wrapper {
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.select-wrapper label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: 200px;
+  
+}
+
+.select-container {
+  position: relative;
+}
+
+.select-container select {
+  width: 60%;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #000000;
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  appearance: none;
+  margin-left: 200px;
+}
+
+.select-container select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 170px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #988a8a;
+  pointer-events: none;
+}
+
+/* Error Handling */
+.error {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 4px;
+  margin-left: 201px;
+}
+
+.error p {
+  margin: 0;
+  font-size: 16px;
+
+}
+
+/* Checkbox Styling */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left:200px ;
+}
+
+.form-check-input {
+  width: 34px;
+  height: 20px;
+  border-radius: 50px;
+  margin-right: 12px;
+  background-color: #ccc;
+  border: 1px solid #aaa;
+  transition: background-color 0.3s ease;
+}
+
+.form-check-input:checked {
+  background-color: #007bff;
+}
+
+.form-check-label {
+  font-weight: 600;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Text Input for Dietary Restrictions */
+input[type="text"] {
+  width: 60%;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: #555;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-left: 200px;
+}
+
+input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.diet{
+  
+  margin-left: 200px;
+}
+/* Submit Button */
+button[type="submit"] {
+  width: 60%;
+  max-width: 60%;
+  padding: 14px 0;
+  background-color: #e74c3c;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 200px;
+}
+
+button[type="submit"]:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .right-side {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .subscription-container h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .select-wrapper label {
+    font-size: 13px;
+  }
+
+  .select-container select {
+    padding: 10px 15px;
+    font-size: 15px;
+  }
+
+  .form-check-label {
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .right-side {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .subscription-container h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .select-wrapper label {
+    font-size: 12px;
+  }
+
+  .select-container select {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    font-size: 15px;
+    padding: 12px 0;
+  }
+}
+.search{
+  width:100%;
+  margin-left: 12px;
+}
+.filter{
+  position:absolute;
+  margin-left: 990px;
+  background-color: white;
+  width:70px;
+  background-color: #d5d5d5;
+  color:#000000;
+  border-radius: 20px;
+  font-size: large;
+  
+}
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(58, 58, 58, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ffffff;
+  border-top-color: #35dc54;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.popup-overlay,
+.error-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Success and Error Card */
+.popup-card,
+.error-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.popup-icon svg,
+.error-icon svg {
+  margin-bottom: 10px;
+}
+
+.popup-icon svg {
+  fill: green;
+}
+
+.error-icon svg {
+  fill: red;
+}

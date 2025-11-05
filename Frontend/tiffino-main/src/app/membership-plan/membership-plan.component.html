@@ -1,0 +1,41 @@
+<div class="back">
+  <div class="subscriptions-container">
+    <div class="container mx-auto px-4">
+      <h1 class="fs-1 fw-bold text-decoration-underline">Subscription Plans</h1>
+
+      <!-- Plans Grid -->
+      <div class="plans-grid">
+        <div class="plan-card" *ngFor="let plan of plans">
+          <!-- Optional Popular Badge -->
+          <div *ngIf="plan.price > 1000" class="popular-badge">Popular</div>
+
+          <!-- Plan Name -->
+          <div class="text-center">
+            <h3 class="text-xl font-semibold mb-2 text-orange-600">{{ plan.name }}</h3>
+
+            <!-- Plan Price -->
+            <div class="plan-price">
+              <span>₹{{ plan.price }}</span>
+              
+            </div>
+
+            <!-- Description -->
+            <p class="text-gray-600 mb-4">Description:{{ plan.description }}</p>
+          </div>
+
+          <!-- Features -->
+          <ul class="features-list">
+            <li><strong>Meal Type:</strong> {{ plan.mealType }}</li>
+            <li><strong>Meal Frequency:</strong> {{ plan.mealFrequency }}</li>
+            <li><strong>Duration:</strong> {{ plan.durationInWeeks }} weeks</li>
+            <li><strong>Delivery:</strong> Free delivery</li>
+            <li>Weekly menu rotation</li>
+          </ul>
+
+          <!-- Subscribe Button -->
+          <button class="subscribe-button" (click)="subsc()">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

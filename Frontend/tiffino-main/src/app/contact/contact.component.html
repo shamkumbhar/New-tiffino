@@ -1,0 +1,92 @@
+<div class="contact-container">
+  <div class="slider">
+    <!-- Optional blinking logo image -->
+    <!-- <img src="assets/images/logo.png" alt="Logo" /> -->
+  </div>
+
+  <div class="contact-content">
+    <!-- Left: Video -->
+    <div class="logo-container">
+      <video autoplay muted loop playsinline>
+        <source src="assets/videos/customer-care.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <!-- Right: Form or Spinner or Success Message -->
+    <div class="form-container">
+      <h2>Contact Us</h2>
+
+      <!-- Spinner -->
+      <div *ngIf="isSubmitting" class="spinner-container">
+        <div class="spinner"></div>
+        <p>Submitting...</p>
+      </div>
+
+     <div *ngIf="isSubmitted" class="card success-card">
+  <!-- Success Icon with Bootstrap Icon -->
+  <div class="icon-container">
+  <i class="bi bi-check-circle-fill" style="font-size: 50px; color: #006400;"></i>
+  </div>
+  
+  <!-- Success Messages -->
+  <h3>Thank you!</h3>
+  <p>Your message has been submitted successfully.</p>
+  <p>Our team will contact you within 24 hours.</p>
+  
+  <!-- Back Button with Bootstrap button classes -->
+  <button class="btn btn-success w-25 h-25" (click)="close()">Back</button>
+</div><!-- Success Card -->
+      
+
+      <!-- Form -->
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" *ngIf="!isSubmitting && !isSubmitted">
+        <fieldset>
+          <div class="form-group">
+            <label for="name"><span class="text-danger">* </span> Full Name:</label>
+            <input
+              type="text"
+              id="name"
+              maxlength="30"
+              formControlName="name"
+              placeholder="Enter your full name"
+            />
+            <div class="error" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+              <p *ngIf="contactForm.get('name')?.hasError('required')">Full Name is required</p>
+              <p *ngIf="contactForm.get('name')?.hasError('pattern')">Full Name should not contain numbers and special symbols</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email"><span class="text-danger">* </span>Email Address:</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Enter your email"
+            />
+            <div class="error" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+              <p *ngIf="contactForm.get('email')?.hasError('email')">Enter valid email</p>
+              <p *ngIf="contactForm.get('email')?.hasError('required')">Email is required</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message"><span class="text-danger">* </span> Message</label>
+            <textarea
+              id="message"
+              formControlName="message"
+              placeholder="Enter your message"
+            ></textarea>
+            <div class="error" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid">
+             <p *ngIf="contactForm.get('message')?.hasError('required')">Message is required</p>
+             <p *ngIf="contactForm.get('message')?.hasError('pattern')">message should not contain special characters</p>
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

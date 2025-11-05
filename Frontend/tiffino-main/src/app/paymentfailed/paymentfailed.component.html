@@ -1,0 +1,25 @@
+<div class="payment-container">
+  <h2>Payment Summary</h2>
+
+  <!-- Order Details -->
+  <div *ngIf="orderData && orderData.orderItems && cuisines.length; " class="product-info">
+    <div *ngFor="let cus of cuisines; let i = index">
+      <h3 class="fw-bold">{{ i + 1 }}: {{ cus.name }}</h3>
+      <p class="ms-3"><strong>Price:</strong> ₹{{ cus.price_per_meal }}</p>
+      <p class="ms-3"><strong>Diet Preferences:</strong> {{ cus.dietary_preferences }}</p>
+      <p class="ms-3"><strong>Spice Level:</strong> {{ cus.spice_level }}</p>
+    </div>
+
+    <h3 class="mt-4">Total: ₹{{ orderData.totalAmount }}</h3>
+    <p>Status: <strong>{{ status  }}</strong></p>
+
+    <div class="d-flex gap-3 mt-3 justify-content-center">
+      
+      <button (click)="retryPayment()" class="btn btn-danger">Retry</button>
+    </div>
+  </div>
+
+  <div *ngIf="showError" class="text-danger text-center mt-4">
+    Payment retry failed or invalid data. Please try again later.
+  </div>
+</div>

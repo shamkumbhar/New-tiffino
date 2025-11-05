@@ -1,0 +1,314 @@
+.controls {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+  margin-left: 400px;
+
+}
+
+.search-wrapper {
+  position: relative;
+  width: 50%;
+  transition: transform 0.25s ease;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 10px 14px 10px 38px; /* extra left for icon */
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-wrapper input:focus {
+  outline: none;
+  border-color: #00a86b;
+  box-shadow: 0 0 6px rgba(0, 168, 107, 0.3);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #888;
+}
+
+/* Small animation to slightly grow the wrapper on focus */
+.search-wrapper:focus-within {
+  transform: scale(1.03);
+}
+.popup {
+  position: fixed;
+  bottom: 100px;
+  right: 300px;
+  background: #2ecc71;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 6px;
+}
+
+.popup .close-icon {
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.offcanvas.open {
+  right: 0;
+}
+
+.filter-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.meal_type {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.meal-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: left; 
+}
+.meal-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.meal-card .viewcart{
+  margin-top: 6px;
+  padding: 6px 12px;
+  border: none;
+  background:  #ff6f00;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn{
+  margin-top: 4px;
+  padding: 6px 12px;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.offcanvas select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  background: #2d2d2d;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.filter-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.filter-buttons button:first-child {
+  background: #555;  
+  color: #fff;
+}
+
+.filter-buttons button:last-child {
+  background: #00b36b; 
+  color: #fff;
+}
+
+:host {
+  display: block;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+#carouselExampleAutoplaying {
+  width: 100%;
+}
+
+.carousel-img {
+  height: 300px;      
+  object-fit: cover;    
+}
+
+.carousel-img {
+  height: 300px;
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+@media (max-width: 768px) {
+  .carousel-img {
+    height: 200px;
+  }
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #ff6200;
+  padding: 40px 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.offer-card {
+  background-color: #fff;
+  border-radius: 50px;
+  padding: 16px;
+  width: 280px;
+  text-align: left;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  
+}
+
+.offer-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.offer-card .sub {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.offer-card .offer {
+  font-size: 1.2rem;
+  color: #ff6200;
+  margin-bottom: 12px;
+}
+
+.offer-card .card-img {
+  max-height: 100px;
+  margin-bottom: 16px;
+}
+
+.offer-card .arrow {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  font-size: 1.5rem;
+  color: #ff6200;
+}
+
+.card {
+  border: none;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 0.8rem;
+  padding: 0.4em 0.6em;
+}
+
+/* cusinefilter.component.css */
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.form-check-label {
+  margin-left: 0.5em;
+}
+
+/* ──────────── ADDED FOR LEFT FILTER + RIGHT GRID LAYOUT ──────────── */
+.page-layout {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.filter-card {
+  width: 250px;       /* fixed left column width */
+  flex-shrink: 0;
+  
+}
+
+.meal-container {
+  flex: 1;            /* remaining width for cards */
+}
+
+
+.popup {
+  width: 1200px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+
+  position: fixed;
+  bottom: 100px;
+  right: 220px;
+
+  background: #28a745;
+  color: #000000;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.close-icon {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+.viewcart {
+  font-size: 25px;
+  font-weight:400;
+  color: #050505;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-left: 820px;
+}
+/* Reduce the width and font size of the select box */
+.state-select {
+    width: 180px;              /* Smaller width */
+           /* Smaller readable font */
+  padding: 6px 8px;          /* Less vertical padding */
+  display: inline-block;               /* You can adjust width as needed */
+  font-size: 16px;            /* Smaller font for compact UI */
+  white-space: nowrap;        /* Prevent text from wrapping */
+  overflow: hidden;           /* Hide overflow */
+  text-overflow: ellipsis;    /* Add "..." to long names */
+}
+
+/* Reduce font size of options inside the dropdown */
+.state-select option {
+  font-size: 14px;            /* Match the select box font size */
+  white-space: nowrap;        /* Prevent multi-line */
+  overflow-y: scroll;
+  overflow-x: scroll;
+  text-overflow:ellipsis;
+  margin-right: 10px;
+}

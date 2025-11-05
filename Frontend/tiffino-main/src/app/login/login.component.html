@@ -1,0 +1,243 @@
+<!--<div class="login-container">
+  <img src="https://thumbs.dreamstime.com/b/sign-page-abstract-concept-vector-illustration-enter-application-mobile-screen-user-login-form-website-interface-ui-new-profile-198851755.jpg" style="width:140px;height:140px;"/>
+  <h2 class="logi">Login </h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+   
+    <div class="phone-input-group">
+      <div class="country-code">
+        <img src="https://flagcdn.com/w40/in.png" alt="India" />
+        <span>+91</span>
+      </div>
+      <input
+        type="text"
+        formControlName="phone"
+        placeholder="Enter 10-digit mobile number"
+      />
+    </div>
+
+   <div class="error" *ngIf="phoneControl?.touched && phoneControl?.invalid">
+  <p *ngIf="phoneControl?.errors?.['required']">Phone number is required</p>
+  <p *ngIf="phoneControl?.errors?.['pattern']">Phone number must be 10 digits</p>
+</div>
+
+ 
+    <button type="submit" [disabled]="!loginForm.valid">Continue</button>
+  
+  </form>
+  <div class="divider">
+  <span>Or</span>
+</div>
+<button class="auth-btn email-auth">
+
+  Continue with Email
+</button>
+<button class="google-signin-btn">
+ <img src="./assets/icons8.png" alt="Google" width="20">
+  Continue with Google
+</button>
+
+<div class="signup-prompt">
+  <h5>New to Tiffino?</h5>
+ <h5> <a routerLink="/register">Create Account</a></h5>
+</div>-->
+
+ <div class="back">
+ 
+  <div class="login-wrapper">
+    <!-- Image Section -->
+    <div class="login-image">
+      <img src="https://thumbs.dreamstime.com/b/sign-page-abstract-concept-vector-illustration-enter-application-mobile-screen-user-login-form-website-interface-ui-new-profile-198851755.jpg" alt="Login Illustration" />
+    </div>
+
+    <!-- Form Section -->
+    <div class="login-container">
+      <h2 class="logi">Login</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+       <div *ngIf="showpopup "class="login-success">
+   <img src="assets/images/check.png" style="width:40px;height:40px" alt="imgsri"/>
+  <p>Login Successful!</p>
+</div>
+      
+ <label class="text-dark fs-6 fw-bold" for="Email">Email:</label>
+<div class="error" *ngIf="f['Email'].touched && f['Email'].invalid">
+  <p *ngIf="f['Email'].errors?.['required']">Email is required</p>
+  <p *ngIf="f['Email'].errors?.['email']">Enter a valid email</p>
+  <p *ngIf="f['Email'].errors?.['emailExists']">Email already exists.</p>
+  <p *ngIf="f['Email'].errors?.['maxlength']">Enter Email up to 30 characters </p>
+</div>
+      
+        <div class="phone-input-group mb-3 mt-1">
+          <div class="country-code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+</svg>
+            <input type="email" formControlName="Email" placeholder="Email Address" />
+          </div>
+        </div>
+
+     
+<!-- Password Label -->
+ <label class="text-dark fs-6 fw-bold" for="password">Password:</label>
+<div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+  <p *ngIf="f['password'].errors?.['required']">Password is required</p>
+  
+  
+</div>
+<div class="phonenum-input-group mb-3 mt-1 position-relative">
+
+  <!-- Left icon and input -->
+  <div class="countrynum-code w-100 d-flex">
+    <!-- Lock icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+      class="bi bi-lock" viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4M4.5 7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7zM8 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3" />
+    </svg>
+ <button type="button" class="toggle-password-btn" (click)="togglePasswordVisibility()" aria-label="Toggle password visibility">
+    <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+      class="bi bi-eye" viewBox="0 0 16 16">
+      <path
+        d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zm-8 4a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-1.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+    </svg>
+    <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+      class="bi bi-eye-slash" viewBox="0 0 16 16">
+      <path
+        d="M13.359 11.238l1.397 1.398-1.06 1.06-1.398-1.397a8.717 8.717 0 0 1-4.298 1.2c-5 0-8-5.5-8-5.5a16.532 16.532 0 0 1 3.22-3.377L1.146 1.146l1.06-1.06 13.708 13.708-1.06 1.06-1.495-1.495zM11.84 10.05l-1.59-1.59A2.5 2.5 0 0 1 8 10.5a2.5 2.5 0 0 1-2.25-1.37l-1.53-1.53c.208-.266.444-.53.703-.778L3.72 4.97A14.693 14.693 0 0 0 1.684 8c.622.832 2.27 2.687 4.94 2.966a7.72 7.72 0 0 0 5.217-1.06zm.95-2.72a5.923 5.923 0 0 0-.922-1.08L9.92 4.88c.246-.07.5-.124.76-.156C12.117 5.15 13.504 6.765 14.316 8c-.238.376-.517.775-.827 1.18z" />
+    </svg>
+  </button>
+    <!-- Input field -->
+    <input
+      [type]="showPassword ? 'text' : 'password'"
+      id="password"
+      formControlName="password"
+      placeholder="Enter password"
+      class="form-control"
+    />
+    
+  </div>
+
+  <!-- Eye icon OUTSIDE of the left flex container -->
+ 
+
+</div>
+
+          <a routerLink="/changepassword" >Forgot Password ?</a>
+        <!---<button type="submit" [disabled]="!loginForm.valid">Continue</button>-->
+        <button class=" mt-2 custom-btn primary-continue" [disabled]="isLoading">
+  Continue
+</button>
+      </form>
+
+      <div class="divider"><span>Or</span></div>
+
+    <!--- <button class="auth-btn email-auth fw-bold" (click)="openPhoneModal()">Continue with Phone Number</button >-->
+      
+     
+
+<button class="custom-btn google-signin-btn"   (click)=continueWithGoogle() >
+  <img src="./assets/icons8.png" alt="Google" width="20" height="20" />
+  Continue with Google
+</button>
+
+      <div class="signup-prompt">
+  <p>New to Tiffino?</p>
+  <p class="ms-2"><a routerLink="/register">Create Account</a></p>
+</div>
+    </div>
+  </div>
+</div>
+
+<!--<div *ngIf="isLoading" class="spinner-overlay">
+   <div class="spinner"></div>
+</div>-->
+<div class="spinner-overlay" *ngIf="isLoading">
+  <div class="hexagon-bg">
+    <div class="spinner"></div>
+  </div>
+</div>
+
+<div class="error-overlay" *ngIf="showErrorPopup">
+  <div class="error-card shadow-lg p-4 bg-white rounded-4 text-center">
+    <div class="error-icon mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#dc3545" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h4 class="text-danger fw-bold">Invalid Email or Password</h4>
+   
+
+
+    
+    <button class="btn btn-outline-danger px-4" (click)="showErrorPopup = false">Close</button>
+  </div>
+</div>
+
+
+  <!--<div class="phone-modal-card">
+    <h3 class="fw-bold">Enter Phone Number</h3>
+    <input type="tel" [(ngModel)]="phoneNumber" placeholder="Enter phone number" maxlength="10" />
+    <button (click)="sendOtp()">Send OTP</button>
+    <button class="close-btn" (click)="closeModals()">×</button>
+  </div>
+</div>
+
+ OTP Entry Modal 
+<div class="modal-backdrop" *ngIf="showOtpModal">
+  <div class="otp-modal-card">
+    <h3 class="fw-bold">Enter OTP</h3>
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" [(ngModel)]="otp[0]" (input)="moveToNext($event, 0)" />
+      <input type="text" maxlength="1" [(ngModel)]="otp[1]" (input)="moveToNext($event, 1)" />
+      <input type="text" maxlength="1" [(ngModel)]="otp[2]" (input)="moveToNext($event, 2)" />
+      <input type="text" maxlength="1" [(ngModel)]="otp[3]" (input)="moveToNext($event, 3)" />
+    </div>
+    <button (click)="verifyOtp()">Verify OTP</button>
+    <button class="close-btn" (click)="closeModals()">×</button>
+  </div>
+</div>
+
+<div *ngIf="Loadings" class="spinner-overlays">
+  <div class="spinners"></div>
+</div>
+
+<div class="error-overlay" *ngIf="showerrorpop">
+  <div class="error-card shadow-lg p-4 bg-white rounded-4 text-center">
+    <div class="error-icon mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#dc3545" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h4 class="text-danger fw-bold">OTP FAILED !PLEASE TRY AGAIN</h4>
+    
+    <button class="btn btn-outline-danger px-4" (click)="showerrorpop = false">Close</button>
+  </div>
+</div>
+
+
+<div class="modal-backdrop" *ngIf="otpSuccess">
+  <div class="success-card">
+    <h3>OTP Verified Successfully!</h3>
+    <button (click)="closeModals()">Close</button>
+  </div>
+</div>
+
+
+<div *ngIf="loading" class="spinner-overlays">
+  <div class="spinnersi"></div>
+</div>
+
+<div class="error-overlay" *ngIf="showerr">
+  <div class="error-card shadow-lg p-4 bg-white rounded-4 text-center">
+    <div class="error-icon mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="#dc3545" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h4 class="text-danger fw-bold">OTP Was not matched Please Retry</h4>
+    
+    <button class="btn btn-outline-danger px-4" (click)="showerr = false">Close</button>
+  </div>
+</div>-->

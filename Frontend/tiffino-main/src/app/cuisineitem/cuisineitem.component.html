@@ -1,0 +1,59 @@
+
+<h1 class="fw-bold text-center">Product Information details</h1>
+
+
+<div class="product-wrapper" *ngIf="product">
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  class="arrow-icon" 
+  viewBox="0 0 16 16" 
+  style="width: 30px; height: 30px; cursor: pointer; margin-left: 20px;"
+  (click)="navigate()">
+  <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+</svg>
+
+  <div class="image-section">
+    <img [src]="product.imageUrl" alt="{{ product.name }}" />
+  </div>
+
+  <div class="info-section">
+    <h1 class="title">{{ product.name }}</h1>
+
+    <h3 class="section-heading">Nutrition Information</h3>
+    <ul class="details-list">
+      <li><i class="bi bi-fire"></i> <strong>Calories:</strong> {{ product.calories || 'N/A' }}</li>
+      <li><i class="bi bi-battery-half"></i> <strong>Carbs:</strong> {{ product.carbs || 'N/A' }}</li>
+      <li><i class="bi bi-droplet"></i> <strong>Fats:</strong> {{ product.fats || 'N/A' }}</li>
+      <li><i class="bi bi-weight"></i> <strong>Protein:</strong> {{ product.protein || 'N/A' }}</li>
+    </ul>
+
+    <h3 class="section-heading">Meal Details</h3>
+    <ul class="details-list">
+      <li><i class="bi bi-list-ul"></i> <strong>Meal Type:</strong> {{ product.meal_type || 'N/A' }}</li>
+      <li><i class="bi bi-thermometer"></i> <strong>Spice Level:</strong> {{ product.spice_level || 'N/A' }}</li>
+      <li><i class="bi bi-clock"></i> <strong>Preparation Time:</strong> {{ product.preparation_time || 'N/A' }}</li>
+      <li><i class="bi bi-currency-rupee"></i> <strong>Price per meal:</strong> ₹{{ product.price_per_meal }}</li>
+       <li> <strong>Price per week:</strong> ₹{{ product.price_per_week
+ }}</li>
+      <li><i class="bi bi-calendar-week"></i>
+        <strong>Available Days:</strong>
+        {{ product.available_days?.length ? product.available_days.join(', ') : 'Not specified' }}
+      </li>
+      <li><i class="bi bi-exclamation-circle"></i>
+        <strong>Allergen Preference:</strong>
+        {{ product.allergen_preferences || 'None' }}
+      </li>
+      <!-- <li><i class="bi bi-tag"></i>
+  <strong>Offer:</strong>
+  <span [ngClass]="product._offer_active ? 'offer-true' : 'offer-false'">
+    {{ product._offer_active ? 'Offer Available' : 'No Offer' }}
+  </span>
+</li> -->
+
+       <button class="add-btn" (click)="addToCart(product)"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-cart-plus-fill" viewBox="0 0 16 16">
+  <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M9 5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 1 0"/>
+</svg>Add to Cart</button>
+
+  
+
+

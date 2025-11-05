@@ -1,0 +1,307 @@
+@defer(when showForm) {<div class="back">
+  <div class="signup-wrapper">
+    <!-- Left: Image -->
+    <div class="signup-image">
+      <img src="https://img.freepik.com/premium-vector/illustration-vector-graphic-cartoon-character-online-registration_516790-1807.jpg" alt="Signup Illustration" />
+    </div>
+
+    <!-- Right: Form -->
+    <div class="signup-container">
+      <h2>Create Account</h2>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <!-- Step 1: Personal Details -->
+        <div *ngIf="step === 1">
+          <!-- Full name -->
+          <div class="error" *ngIf="f['fullName'].touched && f['fullName'].invalid">
+            <p *ngIf="f['fullName'].errors?.['required']">Full Name is required</p>
+             <p *ngIf="f['fullName'].hasError('pattern')">Full Name should not contain numbers special characters</p>
+          </div>
+          <input type="text" formControlName="fullName" placeholder="Full Name" maxlength="30"/>
+
+          <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+  <p *ngIf="f['password'].errors?.['required']">Password is required</p>
+  
+  <p class="passsize" *ngIf="f['password'].errors?.['minlength']">Password must more than 6 leter</p>
+</div>
+          <input
+  type="password"
+  formControlName="password"
+  placeholder="Password"
+  autocomplete="new-password"
+  (input)="checkPasswordStrength()"
+/>
+
+<!-- Password Errors -->
+<div class="errors" *ngIf="f['password'].touched && f['password'].invalid">
+  <!-- <p *ngIf="f['password'].errors?.['required']">Password is required</p> -->
+  <!-- <p *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</p> -->
+</div>
+
+<!-- Password Strength Indicator -->
+<p *ngIf="passwordStrength && f['password'].valid" [ngClass]="passwordStrengthClass" style="margin-left: 50px;">
+  {{ passwordStrength }}
+</p>
+
+          <!-- Email -->
+          <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+            <p *ngIf="f['email'].errors?.['required']">Email is required</p>
+            <p *ngIf="f['email'].errors?.['email']">Enter a valid email</p>
+          </div>
+          <input type="email" formControlName="email" placeholder="Email Address" autocomplete="email" />
+
+          <!-- Phone Number -->
+          <div class="error" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+            <p *ngIf="f['phoneNumber'].errors?.['required']">Phone number is required</p>
+            <p *ngIf="f['phoneNumber'].errors?.['pattern']">Enter a valid 10-digit number</p>
+          </div>
+          <input type="number" formControlName="phoneNumber" placeholder="Mobile Number" autocomplete="tel" />
+
+          <!-- First Name -->
+           <div class="error" *ngIf="f['firstName'].touched && f['firstName'].invalid">
+            <p *ngIf="f['firstName'].errors?.['required']">First Name is required</p>
+            <p *ngIf="f['firstName'].errors?.['pattern']">First Name should have only alphabet charactors</p>
+            <p *ngIf="f['firstName'].errors?.['maxlength']">First Name should have maximum 20 characters</p>
+          </div>
+          <input type="text" formControlName="firstName" placeholder="First Name" autocomplete="given-name" />
+
+         
+          <div class="error" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+             <p *ngIf="f['lastName'].errors?.['required']">Last Name is required</p>
+            <p *ngIf="f['lastName'].errors?.['pattern']">Last Name should have only alphabet charactors</p>
+            <p *ngIf="f['lastName'].errors?.['maxlength']">Last Name should have only characters</p>
+          </div>
+          <input type="text" formControlName="lastName" placeholder="Last Name" autocomplete="family-name" maxlength="20"/>
+<div class="form-group">
+
+  <select id="gender" class="form-control" formControlName="gender">
+    <option value="" disabled selected>Select Gender</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select>
+
+  <div class="error" *ngIf="f['gender'].touched && f['gender'].invalid">
+    <p>Gender is required</p>
+  </div>
+</div>
+          <button type="button" (click)="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 2: Preferences -->
+        <div *ngIf="step === 2">
+          <div class="error" *ngIf="f['roles'].touched && f['roles'].invalid">
+            <p>Role is required</p>
+          </div>
+          <select formControlName="roles"   aria-label="Default select example">
+            <option value="" disabled selected>Select Role</option>
+              <option value="CUSTOMER">CUSTOMER</option>
+                 <option value="ADMIN">ADMIN</option>
+              <option value="DELIVERY_PARTNER" disabled>DELIVERY_PARTNER</option>
+                <option value="SUBADMIN" disabled>SUBADMIN</option>
+               </select>
+
+       
+         <h4  style="margin-left: 50px;" >Profile Photo: </h4>
+<input type="file" (change)="onFileChange($event)" class="mt-1 form-control" />
+
+
+<div *ngIf="imageError" class="text-danger">
+  Invalid file type. Please upload a JPG or JPEG file.
+</div>
+
+          <label class="form-label" style="margin-left: 50px;" >Active Status:</label>
+          <div class="text-danger"   style="margin-left: 50px;" style="margin-left: 50px;" *ngIf="f['isActive'].touched && f['isActive'].invalid">
+        <p  style="margin-left: 50px;" >Status is required</p>
+          </div>
+         <div class="form-check">
+         <input class="form-check-input"  style="margin-left: 50px;" type="radio" formControlName="isActive" [value]="true" id="activeStatus" />
+           <label class="form-check-label"   for="activeStatus">Active</label>
+            </div>
+
+          <div class="form-check">
+            <input class="form-check-input"  style="margin-left: 50px;" type="radio" formControlName="isActive" [value]="false" id="inactiveStatus" />
+            <label class="form-check-label"    for="inactiveStatus">Inactive</label>
+                  </div>
+
+
+
+          <div class="error" *ngIf="f['dietaryPreferences'].touched && f['dietaryPreferences'].invalid">
+            <p>Dietary preference is required</p>
+          </div>
+          <select formControlName="dietaryPreferences"   aria-label="Default select example">
+             <option value="" disabled selected>Select Dietary Preference</option>
+                   <option value="Vegetarian">Vegetarian</option>
+                  <option value="Vegan">Vegan</option>
+                  <option value="Keto">Keto</option>
+                 <option value="HighProtein">High Protein</option>
+                   <option value="LowCarb">Low Carb</option>
+                </select>
+
+          
+          <select formControlName="allergenPreferences"   aria-label="Allergen Preferences">
+  <option value="" disabled selected>Select Allergen Preference</option>
+  <option value="DairyFree">Dairy Free</option>
+  <option value="NutFree">Nut Free</option>
+  <option value="GlutenFree">Gluten Free</option>
+</select>
+
+          
+
+          <button type="button"  (click)="prevStep()">Previous</button>
+          <button type="button"  (click)="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 3: Address Info -->
+        <div *ngIf="step === 3">
+          <div formArrayName="addresses">
+            <div *ngFor="let address of addresses.controls; let i = index" [formGroupName]="i" class="address-block">
+              <h4  style="margin-left: 50px;" >Address {{ i + 1 }}</h4>
+              <input type="text" formControlName="addressLine1" placeholder="Address Line 1" />
+              <input type="text" formControlName="addressLine2" placeholder="Address Line 2 (optional)" />
+
+            <div class="error" *ngIf="address.get('state')?.touched && address.get('state')?.invalid">
+             <p *ngIf="address.get('state')?.hasError('required')">State is required</p>
+            </div>
+          <select formControlName="state" (change)="onStateChange($event, i)">
+            <option value="" disabled selected>Select State</option>
+            <option *ngFor="let state of states" [value]="state.name">{{ state.name }}</option>
+          </select>
+          
+             <div class="error" *ngIf="address.get('city')?.touched && address.get('city')?.invalid">
+             <p *ngIf="address.get('city')?.hasError('required')">City is required</p>
+            </div> 
+          <select formControlName="city">
+            <option value="" disabled selected>Select City</option>
+            <option *ngFor="let city of citiesForState[i]" [value]="city.cityName">{{ city.cityName }}</option>
+          </select>
+     
+            
+                   <div  class="error" *ngIf="address.get('pinCode')?.touched">
+                    <p  *ngIf="address.get('pinCode')?.hasError('required')" class="text-danger">
+                            PIN Code is required.
+                        </p>
+                    <p *ngIf="address.get('pinCode')?.touched && address.get('pinCode')?.hasError('pattern')" class="text-danger">
+                        Enter a valid 6-digit PIN code 
+                     </p>
+                     </div>
+              <input type="text" formControlName="pinCode" placeholder="Pin Code" />
+              <label><input type="checkbox" formControlName="isDefault"  style="margin-left: 50px;" /> Set as Default</label>
+              <select formControlName="addressType">
+                <option value="Home">Home</option>
+                <option value="Work">Work</option>
+                <option value="Other">Other</option>
+              </select>
+              <button type="button" (click)="removeAddress(i)" *ngIf="addresses.length > 1">Remove</button>
+              <hr />
+            </div>
+          <button type="button" (click)="addAddress()" [disabled]="addresses.length >= 3">+ Add Another Address</button>
+          </div>
+
+          <button type="button" (click)="prevStep()">Previous</button>
+          <button type="button" (click)="nextStep()">Next</button>
+        </div>
+
+        <!-- Step 4: Review and Submit -->
+        <div *ngIf="step === 4">
+         
+
+          <div class="form-check mt-3">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="termsAccepted" [ngModelOptions]="{ standalone: true }" id="checkChecked" />
+            <label class="form-check-label" for="checkChecked">
+              I agree to Tiffino's
+              <a href="#" class="text-danger">Terms of Service</a>,
+              <a href="#" class="text-danger">Privacy Policy</a> and
+              <a href="#" class="text-danger">Content Policies</a>.
+            </label>
+          </div>
+
+          <button type="button" (click)="prevStep()">Previous</button>
+          <button type="submit" [disabled]="isLoading || !termsAccepted">
+            <span *ngIf="!isLoading">Create Account</span>
+            <span *ngIf="isLoading">Submitting...</span>
+          </button>
+        </div>
+      </form>
+
+      <!--<h3 class="google-signin-button" id="google-signin-button" #googleSignInButton>
+       <img src="./assets/icons8.png" alt="Google" width="20" />
+      <div #googleButton id="google-signin-button"></div>
+     
+       <div id="google-signin-btn" class="google-signin-button"></div>
+       <div #googleButton class="google-signin-button"></div>
+       <button type="button" class="google-login-btn" (click)="getpan()">
+  <img src="assets/icons8.png" alt="Google" width="20" style="margin-right: 10px;" />
+  Continue with Google
+</button>-->
+ 
+<button type="button" class="google-signin-button" (click)="continueWithGoogle()">
+  <img src="assets/icons8.png" alt="Google Icon" width="20" style="margin-right: 10px;">
+  Continue with Google
+</button>
+      <div class="signup-prompt fw-bold">
+        <h4 class="fw-bold fs-5">Already Login?</h4>
+        <h4 class=" fw-bold fs-5"><a routerLink="/login">Login</a></h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner"></div>
+</div>-->
+<div class="spinner-overlay">
+  <div class="hexagon-bg">
+    <div class="spinner"></div>
+  </div>
+</div>
+
+
+<div class="popup-overlay" *ngIf="showpopup">
+  <div class="popup-card">
+    <div class="popup-icon">
+      <img src="assets/images/check.png" style="width:40px;height:40px" alt="imgsri"/>
+    </div>
+    <h4>Registration Successful</h4>
+ 
+    <p><strong>Name:</strong> {{ userData?.firstName }} {{ userData?.lastName }}</p>
+    <p><strong>Email:</strong> {{ userData?.email }}</p>
+    <p><strong>Phone:</strong> {{ userData?.phoneNumber }}</p>
+
+    <h4><a routerLink="/login" class="btn btn-danger">Login</a></h4>
+  </div>
+</div>
+
+<!-- ❌ Error Popup -->
+<div class="error-overlay" *ngIf="showErrorPopup">
+  <div class="error-card">
+    <div class="error-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+        <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+    <h4>Registration Failed</h4>
+    <p>{{ errorMessage }}</p>
+    <button class="btn btn-danger mt-3" (click)="showErrorPopup = false">Close</button>
+  </div>
+</div>
+}
+
+@placeholder {
+
+
+  
+  <div class="loading-placeholder d-flex justify-content-center align-items-center "  >
+    <div class="spinner-grow text-primary me-2" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-grow text-secondary me-2" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+<div class="spinner-grow text-success me-2" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+    <p class="fw-bold ">Loading signup form...</p>
+  </div>
+
+}

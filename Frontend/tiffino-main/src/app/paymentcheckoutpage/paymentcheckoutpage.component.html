@@ -1,0 +1,168 @@
+
+<div class="payment-container">
+  <h2>Payment Checkout</h2>
+
+  <div *ngIf="orderData && orderData.orderItems && cuisines.length; else loading" class="product-info">
+  <div *ngFor="let cus of cuisines; let i = index">
+    <h3 class="fw-bold">{{i+1}}:{{ cus.name }}</h3>
+   
+      <p class="ms-3"><strong>Price:</strong> ₹{{ cus.price_per_meal }}</p>
+    <p class="ms-3"><strong>Diet Preferences:</strong> {{ cus.dietary_preferences }}</p>
+    <p class="ms-3"><strong>Diet Preferences:{{cus.dietary_preferences}}</strong> </p>
+     <p class="ms-3"><strong>Spice Level:{{cus.spice_level}}</strong> </p>
+  </div>
+</div>
+  <div class="payment-options">
+    <h4>Select Payment Method:</h4>
+    <label><input type="radio" name="payment" value="UPI" [(ngModel)]="selectedPaymentMethod"> UPI</label>
+    <label><input type="radio" name="payment" value="CASH" [(ngModel)]="selectedPaymentMethod"> Cash</label>
+  </div>
+
+  <button (click)="initiatePayment()" >Pay ₹{{ orderData.totalAmount }}</button>
+</div>
+
+<ng-template #loading>
+    <p>Loading order details...</p>
+  </ng-template>
+
+
+
+<div class="container-fluid my-5">
+  <h2 class="text-center fw-bold mb-4">Feature Comparison</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped text-center table table-hover">
+      <thead class="table-primary h4">
+        <tr>
+          <th>Feature</th>
+          <th>Tiffino</th>
+          <th>Zomato/Swiggy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td>Daily Tiffin Service</td>
+          <td>✅</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td>Customizable Subscriptions</td>
+          <td>✅</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td>Nationwide Regional Cuisine</td>
+          <td>✅</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td>Calorie & Nutritional Info</td>
+          <td>✅</td>
+          <td>❌</td>
+        </tr>
+        <tr>
+          <td>Meal Photos & Community</td>
+          <td>✅</td>
+          <td>❌</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h1 class="h1 text-center fw-bold fs-1 text-success">Customizable Meal plan</h1>
+<div class="container my-5">
+  <div class="row g-4">
+    
+    <div class="col-md-4">
+      <div class="card border-success shadow h-100">
+        <div class="card-header bg-success text-white text-center fw-bold h2">
+          Tiffino
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+          
+            <button type="button" class="list-group-item list-group-item-action h4">✅ Customizable meal plans</button>
+           <button type="button" class="list-group-item list-group-item-action h4">✅ Pause/Skip any day</button>
+           <button type="button" class="list-group-item list-group-item-action h4">✅ Weekly/monthly billing</button>
+            <button type="button" class="list-group-item list-group-item-action h4" disabled>✅ Local cuisine preference</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-danger shadow h-100">
+        <div class="card-header bg-danger text-white text-center fw-bold h2">
+          Zomato
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            
+            <button type="button" class="list-group-item list-group-item-action h4">❌ No subscription model</button>
+            <button type="button" class="list-group-item list-group-item-action h4">⚠️ Zomato Gold only for offers</button>
+            <button type="button" class="list-group-item list-group-item-action h4">❌ No meal scheduling</button>
+            <button type="button" class="list-group-item list-group-item-action h4" disabled>⚠️ Some vendor-based plans</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-warning shadow h-100">
+        <div class="card-header bg-warning text-dark text-center fw-bold h2">
+          Swiggy
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+          
+        <button type="button" class="list-group-item list-group-item-action h4">❌ No subscriptions</button>
+        <button type="button" class="list-group-item list-group-item-action h4">⚠️ Swiggy One is for delivery</button>
+         <button type="button" class="list-group-item list-group-item-action h4">❌ No diet tracking or pausing</button>
+         <button type="button" class="list-group-item list-group-item-action h4" disabled>⚠️ One-time orders only</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="container my-5">
+  <div class="row align-items-center ">
+    
+  
+    <div class="col-md-6 chart-container">
+      <div class="card shadow p-4 ">
+        <h2 class="text-center">India Market Coverage</h2>
+        <canvas #indiaPieChart></canvas>
+      </div>
+    </div>
+
+ 
+    <div class="col-md-6">
+      <div class="card shadow p-4 bg-light">
+        <h4 class="text-success fw-bold">Availability Info</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item list-group-item-action h5">✅ Available in 28 States</li>
+          <li class="list-group-item list-group-item-action h5">✅ Covered in 8 Union Territories</li>
+          <li class="list-group-item list-group-item-action h5">✅ Tier 1, Tier 2 & Rural zones included</li>
+          <li class="list-group-item list-group-item-action text-primary fw-semibold">📈 100% Nationwide Penetration</li>
+        </ul>
+        <p class="text-success fw-bold text-center mt-3 ">
+          ✅ Tiffino is available across every state and union territory in India!
+        </p>
+      </div>
+    </div>
+
+  </div>
+  
+  
+
+
+
+
+
+
+

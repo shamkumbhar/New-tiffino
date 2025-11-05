@@ -1,0 +1,158 @@
+
+.back {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSV626dapoOfdh9DwzqOmITjUG9v-zBW9Zozw&s');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.back {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full page */
+  overflow: hidden;
+}
+
+.back video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 1;
+}
+
+.subscriptions-container {
+  padding-top: 6rem;
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 2rem;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+  .plans-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Plan Card */
+.plan-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+  border-color: #f97316;
+}
+
+/* Popular Badge */
+.popular-badge {
+  background-color: #f97316;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Plan Title */
+.plan-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #f97316;
+}
+
+/* Plan Price */
+.plan-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2e2721;
+  margin: 1rem 0 0.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.plan-price span {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #f97316;
+}
+
+.plan-price .text-sm {
+  font-size: 0.5rem;
+  color: #6b7280;
+}
+
+/* Description */
+.plan-card p {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+}
+
+/* Features List */
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1.5rem;
+}
+
+.features-list li {
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  color: #374151;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.features-list li strong {
+  color: #f97316;
+}
+
+/* Subscribe Button */
+.subscribe-button {
+  width: 100%;
+  background-color: #f97316;
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.subscribe-button:hover {
+  background-color: #ea580c;
+  transform: scale(1.05);
+}
